@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="bg-gray-900 dark:bg-gray-800 py-8 text-center transition duration-300">
       <div className="container mx-auto px-6">
         <p className="text-gray-400 dark:text-gray-500 mb-4 text-sm">
-          &copy; {currentYear} endale. All rights reserved.
+          &copy; {currentYear} [Your Name]. All rights reserved.
         </p>
         <div className="flex justify-center space-x-8">
           <a
