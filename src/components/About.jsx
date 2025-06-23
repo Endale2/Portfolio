@@ -9,6 +9,8 @@ const skills = [
   'TypeScript',
   'Tailwind CSS',
   'MongoDB & SQL',
+  'Git & GitHub',
+  'Docker',
 ];
 
 const About = () => {
@@ -34,7 +36,7 @@ const About = () => {
             <p className="mb-6">
               With a focus on intuitive user interfaces, robust backends, and seamless API integrations, I turn challenges into performance-driven solutions that elevate the user experience.
             </p>
-            
+
             {/* Skills List */}
             <ul className="grid grid-cols-2 gap-x-6 gap-y-2 font-code text-base text-slate-300">
               {skills.map((skill, index) => (
@@ -51,20 +53,21 @@ const About = () => {
             <div className="relative w-64 h-64 md:w-72 md:h-72 group">
               {/* Decorative border with hover effect */}
               <div className="absolute inset-0 border-2 border-cyan-400 rounded-md transition-transform duration-300
-                          group-hover:translate-x-2 group-hover:translate-y-2">
+                               group-hover:translate-x-2 group-hover:translate-y-2">
               </div>
-              
+
               {/* Image with a color overlay */}
               <div className="relative w-full h-full rounded-md overflow-hidden">
                 {/* NOTE: Replace this src with the path to your actual profile picture! */}
-                <img 
-                  src="https://via.placeholder.com/300" // <-- REPLACE THIS URL
-                  alt="Endale Solomon" 
-                  className="w-full h-full object-cover" 
+                {/* Use a real image path from your public folder or a CDN */}
+                <img
+                  src="https://via.placeholder.com/300/1a202c/edf2f7?text=Your+Photo" // <-- REPLACE THIS URL
+                  alt="Endale Solomon"
+                  className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0" // Grayscale on hover
                 />
                 {/* Color overlay with transition */}
                 <div className="absolute inset-0 bg-cyan-600/30 mix-blend-multiply
-                            transition-opacity duration-300 group-hover:opacity-0">
+                                 transition-opacity duration-300 group-hover:opacity-0">
                 </div>
               </div>
             </div>

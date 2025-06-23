@@ -13,18 +13,23 @@ import {
   SiMysql,
   SiFirebase,
   SiDocker,
-  SiHtml5, // Added common web technologies
+  SiHtml5,
   SiCss3,
   SiJavascript,
   SiTypescript,
   SiGit,
   SiGithub,
   SiLinux,
-  SiKubernetes, // Added more relevant dev tools
+  SiKubernetes,
   SiGooglecloud,
-  SiPostgresql, // Another common database
-  SiTailwindcss, // Tailwind CSS for consistency
-  SiFigma // Design tools if relevant
+  SiPostgresql,
+  SiTailwindcss,
+  SiSass, // Added Sass
+  SiTestinglibrary, // Added Testing Library (React Testing Library, Jest)
+  SiJest, // Jest specifically
+  SiGraphql, // GraphQL
+  SiSpring, // Java Spring Boot (if applicable)
+  SiCplusplus // C++
 } from 'react-icons/si';
 
 // Group skills into categories for better organization and display
@@ -32,44 +37,54 @@ const categorizedSkills = [
   {
     category: "Languages",
     skills: [
-      { name: 'Go', icon: SiGo },
-      { name: 'Python', icon: SiPython },
       { name: 'JavaScript', icon: SiJavascript },
       { name: 'TypeScript', icon: SiTypescript },
+      { name: 'Python', icon: SiPython },
+      { name: 'Go', icon: SiGo },
       { name: 'Dart', icon: SiDart },
+      { name: 'C++', icon: SiCplusplus }, // Example: C++
     ]
   },
   {
-    category: "Frontend",
+    category: "Frontend Frameworks",
     skills: [
-      { name: 'React', icon: SiReact },
+      { name: 'React.js', icon: SiReact },
       { name: 'Next.js', icon: SiNextdotjs },
       { name: 'Vue.js', icon: SiVuedotjs },
       { name: 'HTML5', icon: SiHtml5 },
       { name: 'CSS3', icon: SiCss3 },
-      { name: 'Tailwind CSS', icon: SiTailwindcss }, // Explicitly include Tailwind CSS
     ]
   },
   {
-    category: "Backend",
+    category: "Styling & UI",
+    skills: [
+      { name: 'Tailwind CSS', icon: SiTailwindcss },
+      { name: 'Sass', icon: SiSass },
+    ]
+  },
+  {
+    category: "Backend Technologies",
     skills: [
       { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'Express.js', icon: SiNodedotjs }, // Use Node.js icon for Express
       { name: 'Django', icon: SiDjango },
-      { name: 'Express.js', icon: SiNodedotjs }, // Can use Node.js icon for Express
+      { name: 'Spring Boot', icon: SiSpring }, // Example: Spring Boot
+      { name: 'GraphQL', icon: SiGraphql },
     ]
   },
   {
-    category: "Mobile",
+    category: "Mobile Development",
     skills: [
       { name: 'Flutter', icon: SiFlutter },
+      // { name: 'React Native', icon: SiReact }, // Can add if you use it separately from Flutter
     ]
   },
   {
     category: "Databases",
     skills: [
       { name: 'MongoDB', icon: SiMongodb },
-      { name: 'MySQL', icon: SiMysql },
       { name: 'PostgreSQL', icon: SiPostgresql },
+      { name: 'MySQL', icon: SiMysql },
       { name: 'Firebase', icon: SiFirebase },
     ]
   },
@@ -80,9 +95,10 @@ const categorizedSkills = [
       { name: 'GitHub', icon: SiGithub },
       { name: 'Docker', icon: SiDocker },
       { name: 'Kubernetes', icon: SiKubernetes },
-      { name: 'GCP', icon: SiGooglecloud },
+      { name: 'Google Cloud', icon: SiGooglecloud },
       { name: 'Linux', icon: SiLinux },
-      // { name: 'Figma', icon: SiFigma }, // Uncomment if relevant to your workflow
+      { name: 'Jest', icon: SiJest },
+      { name: 'Testing Library', icon: SiTestinglibrary },
     ]
   },
 ];
@@ -100,18 +116,20 @@ const Skills = () => {
 
         {/* Skills Grid by Category */}
         <div className="space-y-12"> {/* Add vertical spacing between categories */}
-          {categorizedSkills.map((categoryGroup, index) => (
-            <div key={index} className="text-center md:text-left">
+          {categorizedSkills.map((categoryGroup, categoryIndex) => (
+            <div key={categoryIndex} className="text-center md:text-left">
               <h3 className="text-2xl font-bold text-cyan-300 mb-6 font-code">
                 {categoryGroup.category}
               </h3>
               <div className="flex flex-wrap justify-center md:justify-start gap-8">
-                {categoryGroup.skills.map((skill) => (
+                {categoryGroup.skills.map((skill, skillIndex) => (
                   <div
                     key={skill.name}
                     className="flex flex-col items-center bg-slate-800 p-4 rounded-lg shadow-lg
                                transition-all duration-300 hover:scale-105 hover:bg-slate-700
-                               border border-slate-700 hover:border-cyan-600 w-32 h-32 justify-center" // Fixed size for better layout
+                               border border-slate-700 hover:border-cyan-600 w-32 h-32 justify-center
+                               animate-fade-in-up" // Staggered animation for skills
+                               style={{ animationDelay: `${0.05 * skillIndex + (categoryIndex * 0.1)}s` }}
                   >
                     <skill.icon className="w-12 h-12 mb-3 text-cyan-400" /> {/* Larger icons, cyan color */}
                     <span className="text-sm font-medium text-slate-200 font-code">
