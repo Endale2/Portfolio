@@ -1,231 +1,234 @@
-import React, { useState } from 'react';
-import { FaExternalLinkAlt, FaGithub, FaPlus, FaTimes, FaPython, FaMobileAlt, FaGlobe, FaBook } from 'react-icons/fa'; // Added FaBook for docs
+import React, { useState, useEffect } from 'react'; // Added useEffect for potential Esc key close
+import {
+  FaGithub,
+  FaPlus,
+  FaTimes, // The X icon for closing
+  FaPython,
+  FaMobileAlt,
+  FaGlobe,
+  FaBook,
+  FaExternalLinkAlt
+} from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const projects = [
+  {
+    title: "SwiftTask Pro",
+    category: "Mobile App",
+    description:
+      "A feature-rich task manager built with React Native and Firebase. It offers real-time synchronization, seamless collaboration features, and robust cross-platform support for both iOS and Android devices, ensuring productivity on the go.",
+    coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=SwiftTask+Pro",
+    platform: "mobile",
+    github: "https://github.com/endale-dev/swift-task-pro-mobile",
+    downloadUrl: "https://expo.dev/@endale-dev/swifttask-pro-demo"
+  },
+  {
+    title: "DevPortfolio Template",
+    category: "Full-Stack Web",
+    description:
+      "A highly customizable portfolio boilerplate developed with Next.js and styled using Tailwind CSS. It features a built-in dark mode, excellent performance optimizations, and a modern, responsive design perfect for showcasing developer projects.",
+    coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=DevPortfolio",
+    platform: "web",
+    website: "https://devportfolio-template-demo.vercel.app",
+    github: "https://github.com/endale-dev/devportfolio-template"
+  },
+  {
+    title: "E-commerce REST API",
+    category: "Backend Service",
+    description:
+      "A scalable and secure E-commerce REST API built with Express.js and MongoDB. It includes comprehensive features like JWT authentication, a flexible product catalog, shopping carts, order management, and integrated Stripe payment processing.",
+    coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=E-commerce+API",
+    platform: "web",
+    website: "https://ecommerce-api-docs.example.com", // Placeholder
+    github: "https://github.com/endale-dev/ecommerce-api-backend"
+  },
+  {
+    title: "PyCLI Image Processor",
+    category: "CLI Tool",
+    description:
+      "A powerful, Python-powered command-line interface tool designed for batch image operations. It supports resizing, watermarking, format conversion, and various image filters, making it fast and highly scriptable for automated workflows.",
+    coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=PyCLI+Image",
+    platform: "cmd",
+    github: "https://github.com/endale-dev/pycli-image-processor",
+    pypi: "https://pypi.org/project/pycli-image-processor/"
+  }
+];
+
+const linkIcons = {
+  github: FaGithub,
+  website: FaGlobe,
+  downloadUrl: FaMobileAlt,
+  pypi: FaPython,
+  docs: FaBook // Added docs icon in case it's needed in the future
+};
 
 const Projects = () => {
-  // Define your project data with specific categories and links
-  const projects = [
-    {
-      title: "SwiftTask Pro (Mobile)",
-      category: "Mobile App Development",
-      description:
-        "A feature-rich mobile task management application designed for seamless personal and team productivity. SwiftTask Pro offers intuitive task creation, collaborative features, real-time synchronization, and cross-platform accessibility. Built using React Native for the frontend and a scalable Firebase backend for real-time data.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=SwiftTask+Pro+Mobile",
-      platform: "mobile",
-      github: "https://github.com/endale-dev/swift-task-pro-mobile", // Replace with your actual GitHub link
-      downloadUrl: "https://expo.dev/@endale-dev/swifttask-pro-demo" // Example: Expo demo link or app store link
-    },
-    {
-      title: "DevPortfolio Template (Web)",
-      category: "Fullstack Web Development",
-      description:
-        "A highly customizable, modern, and responsive portfolio template built with Next.js and Tailwind CSS. Designed specifically for developers, it features dynamic project sections, dark mode, smooth scrolling, and performance optimizations. This template aims to provide an effortless way to showcase professional work online.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=DevPortfolio+Web",
-      platform: "web",
-      website: "https://devportfolio-template-demo.vercel.app", // Replace with your actual live demo URL
-      github: "https://github.com/endale-dev/devportfolio-template", // Replace with your actual GitHub link
-    },
-    {
-      title: "E-commerce REST API (Backend)",
-      category: "Backend Development",
-      description:
-        "A robust and scalable RESTful API powering an e-commerce platform. Developed with Node.js, Express.js, and MongoDB, it handles core functionalities like user authentication (JWT), product catalog management, shopping cart operations, order processing, and secure payment integration via Stripe. Designed for microservice architecture compatibility.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=E-commerce+API",
-      platform: "web", // Backend for a web application
-      website: "https://ecommerce-api-docs.example.com", // Example: Link to API documentation (Swagger/Postman)
-      github: "https://github.com/endale-dev/ecommerce-api-backend", // Replace with your actual GitHub link
-    },
-    {
-      title: "PyCLI Image Processor (CLI Tool)",
-      category: "Command Line Tool",
-      description:
-        "A powerful command-line interface (CLI) tool for batch image processing. Written in Python, it supports operations like resizing, watermarking, format conversion, and applying filters. Optimized for performance and ease of use, it's ideal for developers and designers needing quick, automated image manipulations.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=PyCLI+Image+Processor",
-      platform: "cmd",
-      github: "https://github.com/endale-dev/pycli-image-processor", // Replace with your actual GitHub link
-      pypi: "https://pypi.org/project/pycli-image-processor/" // Example: PyPI or NPM link for package
-    },
-    {
-      title: "Smart Home Dashboard (Web)",
-      category: "IoT & Web Development",
-      description:
-        "An interactive web dashboard for monitoring and controlling smart home devices. Built with React for the frontend and a custom Node.js WebSocket server for real-time communication. Users can visualize sensor data, manage smart lights, and set automated routines through a responsive and intuitive interface.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=Smart+Home+Dashboard",
-      platform: "web",
-      website: "https://smarthome-dashboard.example.com", // Replace with your actual live demo URL
-      github: "https://github.com/endale-dev/smart-home-dashboard", // Replace with your actual GitHub link
-    },
-    {
-      title: "Data Visualization Engine (Web)",
-      category: "Data Science & Frontend",
-      description:
-        "A web-based data visualization engine capable of rendering complex datasets into interactive charts and graphs. Utilizes D3.js and React to create dynamic and responsive visualizations. Supports various data inputs (CSV, JSON) and allows users to customize chart types and parameters.",
-      coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=Data+Viz+Engine",
-      platform: "web",
-      website: "https://data-viz-engine.example.com", // Replace with your actual live demo URL
-      github: "https://github.com/endale-dev/data-visualization-engine", // Replace with your actual GitHub link
-    }
-  ];
+  const [selected, setSelected] = useState(null);
 
-  const [selectedProject, setSelectedProject] = useState(null);
-
-  const openModal = (project) => {
-    setSelectedProject(project);
-    document.body.style.overflow = 'hidden'; // Disable scrolling on the body when modal is open
+  const openModal = (proj) => {
+    setSelected(proj);
+    document.body.style.overflow = 'hidden'; // Prevents scrolling behind modal
   };
 
   const closeModal = () => {
-    setSelectedProject(null);
-    document.body.style.overflow = 'unset'; // Re-enable scrolling
+    setSelected(null);
+    document.body.style.overflow = ''; // Restores scrolling
   };
 
-  // Function to render appropriate links based on project platform
-  const renderProjectLinks = (project, isModal = false) => {
-    const iconClass = isModal ? "mr-2" : "mr-1";
-    const textClass = isModal ? "text-base" : "text-xs md:text-sm";
-    const linkBaseClass = `flex items-center text-cyan-400 hover:text-cyan-300 transition-colors duration-200 ${textClass} cursor-pointer group`; // Added group for icon animations
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
 
-    return (
-      <div className={`flex flex-wrap gap-x-4 gap-y-2 ${isModal ? "mt-4" : ""}`}>
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkBaseClass}
-          >
-            <FaGithub className={`${iconClass} group-hover:scale-110 transition-transform duration-200`} />
-            View Source Code
-          </a>
-        )}
-        {project.website && project.platform === "web" && (
-          <a
-            href={project.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkBaseClass}
-          >
-            <FaGlobe className={`${iconClass} group-hover:scale-110 transition-transform duration-200`} />
-            View Live Demo
-          </a>
-        )}
-        {project.downloadUrl && project.platform === "mobile" && (
-          <a
-            href={project.downloadUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkBaseClass}
-          >
-            <FaMobileAlt className={`${iconClass} group-hover:scale-110 transition-transform duration-200`} />
-            Download App
-          </a>
-        )}
-        {project.pypi && project.platform === "cmd" && (
-          <a
-            href={project.pypi}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkBaseClass}
-          >
-            <FaPython className={`${iconClass} group-hover:scale-110 transition-transform duration-200`} />
-            View on PyPI/Package
-          </a>
-        )}
-        {project.website && !['web', 'mobile', 'cmd'].includes(project.platform) && ( // For general documentation/website if not a typical web/mobile/cmd project
-          <a
-            href={project.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkBaseClass}
-          >
-            <FaBook className={`${iconClass} group-hover:scale-110 transition-transform duration-200`} />
-            View Docs/Info
-          </a>
-        )}
-        {!isModal && ( // "Details" button only on the card, not in the modal
-          <button
-            onClick={() => openModal(project)}
-            className={`${linkBaseClass} mt-2 md:mt-0`} // Adjust margin for smaller screens
-          >
-            <FaPlus className={`${iconClass} group-hover:rotate-90 transition-transform duration-300`} /> {/* Rotate on hover */}
-            Details
-          </button>
-        )}
-      </div>
-    );
+    if (selected) {
+      document.addEventListener('keydown', handleEscapeKey);
+    } else {
+      document.removeEventListener('keydown', handleEscapeKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [selected]); // Re-run effect when selected project changes
+
+  const cardVariants = { // Renamed from 'variants' to 'cardVariants' for clarity
+    enter: { opacity: 0, y: 20 },
+    center: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 }
+  };
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 50 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 20 } },
+    exit: { opacity: 0, scale: 0.9, y: -50, transition: { duration: 0.2 } }
+  };
+
+  const renderLinks = (proj, isModal = false) => {
+    const keys = ['github', 'website', 'downloadUrl', 'pypi'];
+    return keys.map((key) => {
+      if (!proj[key]) return null;
+      const Icon = linkIcons[key] || FaExternalLinkAlt;
+      return (
+        <a
+          key={key}
+          href={proj[key]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition transform hover:scale-105 ${isModal ? 'text-base' : 'text-sm'}`}
+        >
+          <Icon className="w-5 h-5" />
+          {key === 'github' && 'GitHub'}
+          {key === 'website' && 'Live Site'}
+          {key === 'downloadUrl' && 'Download App'}
+          {key === 'pypi' && 'PyPI Package'}
+        </a>
+      );
+    });
   };
 
   return (
-    <section id="projects" className="py-20 md:py-32 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-6xl"> {/* Increased max-width for more content */}
-        {/* Section Heading with consistent styling */}
-        <h2 className="relative flex items-center text-3xl font-bold text-slate-100 mb-12 w-full">
-          <span className="font-code text-2xl text-cyan-400 mr-3">02.</span> {/* Incremented section number */}
+    <section id="projects" className="relative py-20 bg-gray-900 text-white px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="flex items-center text-3xl font-bold mb-12">
+          <span className="text-cyan-400 font-code text-2xl mr-4">02.</span>
           My Projects
-          <span className="flex-grow h-px bg-slate-700 ml-6"></span>
+          <div className="flex-grow h-px bg-gray-700 ml-6" />
         </h2>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"> {/* Adjusted grid for flexibility */}
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="bg-slate-800 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2
-                         border border-slate-700 hover:border-cyan-600 flex flex-col h-full animate-fade-in-up" // Added fade-in-up
-                         style={{ animationDelay: `${0.1 * index}s` }} // Staggered animation
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((proj, i) => (
+            <motion.div
+              key={i}
+              className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 border border-gray-700 cursor-pointer" // Added cursor-pointer
+              initial="enter"
+              animate="center"
+              whileHover={{ scale: 1.02 }}
+              variants={cardVariants} // Using renamed variant
+              transition={{ delay: i * 0.1 }}
+              onClick={() => openModal(proj)} // Make entire card clickable for modal
             >
-              {project.coverImage && (
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  className="rounded-t-lg w-full h-48 object-cover border-b border-slate-700"
-                />
-              )}
-              <div className="p-5 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-cyan-300 mb-2 font-code">{project.title}</h3> {/* Applied font-code */}
-                  <span className="text-slate-400 text-xs bg-slate-700 px-2 py-1 rounded-full mb-3 inline-block font-code">
-                    {project.category}
-                  </span>
-                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">
-                    {project.description.substring(0, 150)}... {/* Increased description length slightly */}
-                  </p>
+              <img
+                src={proj.coverImage}
+                alt={proj.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-5">
+                <h3 className="text-xl font-semibold text-cyan-300 mb-2 font-code">{proj.title}</h3>
+                <span className="inline-block bg-gray-700 text-xs px-2 py-1 rounded-full mb-3 font-code">
+                  {proj.category}
+                </span>
+                <p className="text-gray-400 text-sm mb-4 line-clamp-3">{proj.description}</p>
+                <div className="flex flex-wrap gap-4">
+                  {renderLinks(proj)}
+                  {/* The "Details" button is now redundant if the whole card opens the modal */}
+                  {/* <button
+                    onClick={() => openModal(proj)}
+                    className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 transition text-sm"
+                  >
+                    <FaPlus className="w-4 h-4" /> Details
+                  </button> */}
                 </div>
-                {renderProjectLinks(project)}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-
-        {/* Project Details Modal */}
-        {selectedProject && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 p-4 animate-fade-in">
-            <div className="bg-slate-800 rounded-lg shadow-2xl max-w-xl md:max-w-2xl w-full p-6 relative animate-scale-up border border-slate-700"> {/* Added border to modal */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-300 transition-colors duration-200 cursor-pointer p-1 rounded-full bg-slate-700 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                aria-label="Close project details"
-              >
-                <FaTimes className="w-6 h-6" />
-              </button>
-              {selectedProject.coverImage && (
-                <img
-                  src={selectedProject.coverImage}
-                  alt={selectedProject.title}
-                  className="rounded-lg w-full h-56 object-cover mb-6 border border-slate-700"
-                />
-              )}
-              <h3 className="text-3xl font-bold text-cyan-300 mb-3 font-code">{selectedProject.title}</h3>
-              <p className="text-slate-400 text-base mb-4 bg-slate-700 px-3 py-1 rounded-full inline-block font-code">
-                {selectedProject.category}
-              </p>
-              <div className="text-slate-300 mb-6 max-h-72 overflow-y-auto text-base leading-relaxed custom-scrollbar"> {/* Custom scrollbar class */}
-                {selectedProject.description}
-              </div>
-              {renderProjectLinks(selectedProject, true)}
-            </div>
-          </div>
-        )}
       </div>
+
+      <AnimatePresence>
+        {selected && (
+          <>
+            {/* Backdrop with click to close */}
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-80 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal} // Close modal when clicking on backdrop
+            />
+            {/* Modal */}
+            <motion.div
+              className="fixed inset-0 flex items-center justify-center z-50 p-4"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={modalVariants} // Apply modal variants
+            >
+              <div className="bg-gray-800 rounded-lg shadow-2xl max-w-xl w-full p-6 border border-gray-700 relative"> {/* Added relative for positioning close button */}
+                {/* Modal Closing Icon - Enhanced */}
+                <button
+                  onClick={closeModal}
+                  className="absolute top-3 right-3 text-cyan-400 hover:text-red-500 transition-all duration-200 p-2 rounded-full bg-gray-700 hover:bg-gray-700/80 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
+                  aria-label="Close"
+                >
+                  <FaTimes className="w-7 h-7" /> {/* Increased size for better visibility */}
+                </button>
+
+                <h3 className="text-2xl font-bold text-cyan-300 mb-3 font-code mt-4">{selected.title}</h3> {/* Added mt-4 to push content down from close button */}
+                <span className="inline-block bg-gray-700 text-xs px-2 py-1 rounded-full mb-4 font-code">
+                  {selected.category}
+                </span>
+                <p className="text-gray-300 text-base mb-6 leading-relaxed">{selected.description}</p> {/* Added leading-relaxed */}
+                
+                {/* Project Image in Modal (Optional, if you want a larger image) */}
+                {selected.coverImage && (
+                  <img
+                    src={selected.coverImage}
+                    alt={selected.title}
+                    className="w-full h-auto rounded-md mb-6 border border-gray-700"
+                  />
+                )}
+
+                <div className="flex flex-wrap gap-4">
+                  {renderLinks(selected, true)}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

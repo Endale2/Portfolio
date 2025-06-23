@@ -1,149 +1,138 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import {
-  SiGo,
+  SiJavascript,
   SiPython,
-  SiDjango,
-  SiNodedotjs,
+  SiGo,
+  SiHtml5,
+  SiCss3,
   SiReact,
   SiNextdotjs,
   SiVuedotjs,
   SiFlutter,
-  SiDart,
   SiMongodb,
+  SiPostgresql,
   SiMysql,
   SiFirebase,
   SiDocker,
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
-  SiTypescript,
+  SiKubernetes,
   SiGit,
   SiGithub,
   SiLinux,
-  SiKubernetes,
-  SiGooglecloud,
-  SiPostgresql,
+  SiGraphql,
   SiTailwindcss,
-  SiSass, // Added Sass
-  SiTestinglibrary, // Added Testing Library (React Testing Library, Jest)
-  SiJest, // Jest specifically
-  SiGraphql, // GraphQL
-  SiSpring, // Java Spring Boot (if applicable)
-  SiCplusplus // C++
+  SiSass,
+  SiNodedotjs, // Corrected import for Node.js
+  SiC // Added import for C language
 } from 'react-icons/si';
 
-// Group skills into categories for better organization and display
-const categorizedSkills = [
+// Note: If you want to include specific backend frameworks for Python/Go,
+// you might want to consider specific icons if available (e.g., SiDjango for Django)
+// or use the language icon as a placeholder. For Gin, SiGo is appropriate.
+
+const categories = [
   {
-    category: "Languages",
+    name: 'Languages',
     skills: [
       { name: 'JavaScript', icon: SiJavascript },
-      { name: 'TypeScript', icon: SiTypescript },
       { name: 'Python', icon: SiPython },
       { name: 'Go', icon: SiGo },
-      { name: 'Dart', icon: SiDart },
-      { name: 'C++', icon: SiCplusplus }, // Example: C++
+      { name: 'C', icon: SiC } // Added C language
     ]
   },
   {
-    category: "Frontend Frameworks",
+    name: 'Frontend',
     skills: [
-      { name: 'React.js', icon: SiReact },
+      { name: 'React', icon: SiReact },
       { name: 'Next.js', icon: SiNextdotjs },
       { name: 'Vue.js', icon: SiVuedotjs },
       { name: 'HTML5', icon: SiHtml5 },
-      { name: 'CSS3', icon: SiCss3 },
+      { name: 'CSS3', icon: SiCss3 }
     ]
   },
   {
-    category: "Styling & UI",
+    name: 'Styling',
     skills: [
       { name: 'Tailwind CSS', icon: SiTailwindcss },
-      { name: 'Sass', icon: SiSass },
+      { name: 'Sass', icon: SiSass }
     ]
   },
   {
-    category: "Backend Technologies",
+    name: 'Backend',
     skills: [
-      { name: 'Node.js', icon: SiNodedotjs },
-      { name: 'Express.js', icon: SiNodedotjs }, // Use Node.js icon for Express
-      { name: 'Django', icon: SiDjango },
-      { name: 'Spring Boot', icon: SiSpring }, // Example: Spring Boot
-      { name: 'GraphQL', icon: SiGraphql },
+      { name: 'Node.js', icon: SiNodedotjs }, // Corrected icon for Node.js
+      { name: 'Django', icon: SiPython }, // Django framework
+      { name: 'Gin Framework', icon: SiGo }, // Added Gin Framework with Go icon
+      { name: 'GraphQL', icon: SiGraphql }
     ]
   },
   {
-    category: "Mobile Development",
+    name: 'Mobile',
     skills: [
-      { name: 'Flutter', icon: SiFlutter },
-      // { name: 'React Native', icon: SiReact }, // Can add if you use it separately from Flutter
+      { name: 'Flutter', icon: SiFlutter }
     ]
   },
   {
-    category: "Databases",
+    name: 'Databases',
     skills: [
       { name: 'MongoDB', icon: SiMongodb },
       { name: 'PostgreSQL', icon: SiPostgresql },
       { name: 'MySQL', icon: SiMysql },
-      { name: 'Firebase', icon: SiFirebase },
+      { name: 'Firebase', icon: SiFirebase }
     ]
   },
   {
-    category: "Tools & Platforms",
+    name: 'DevOps & Tools',
     skills: [
-      { name: 'Git', icon: SiGit },
-      { name: 'GitHub', icon: SiGithub },
       { name: 'Docker', icon: SiDocker },
       { name: 'Kubernetes', icon: SiKubernetes },
-      { name: 'Google Cloud', icon: SiGooglecloud },
-      { name: 'Linux', icon: SiLinux },
-      { name: 'Jest', icon: SiJest },
-      { name: 'Testing Library', icon: SiTestinglibrary },
+      { name: 'Git', icon: SiGit },
+      { name: 'GitHub', icon: SiGithub },
+      { name: 'Linux', icon: SiLinux }
     ]
-  },
+  }
 ];
 
-const Skills = () => {
-  return (
-    <section id="skills" className="py-20 md:py-32 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-6xl">
-        {/* Section Heading consistent with About & Projects */}
-        <h2 className="relative flex items-center text-3xl font-bold text-slate-100 mb-12 w-full">
-          <span className="font-code text-2xl text-cyan-400 mr-3">03.</span> {/* Incremented section number */}
-          My Skills
-          <span className="flex-grow h-px bg-slate-700 ml-6"></span>
-        </h2>
-
-        {/* Skills Grid by Category */}
-        <div className="space-y-12"> {/* Add vertical spacing between categories */}
-          {categorizedSkills.map((categoryGroup, categoryIndex) => (
-            <div key={categoryIndex} className="text-center md:text-left">
-              <h3 className="text-2xl font-bold text-cyan-300 mb-6 font-code">
-                {categoryGroup.category}
-              </h3>
-              <div className="flex flex-wrap justify-center md:justify-start gap-8">
-                {categoryGroup.skills.map((skill, skillIndex) => (
-                  <div
-                    key={skill.name}
-                    className="flex flex-col items-center bg-slate-800 p-4 rounded-lg shadow-lg
-                               transition-all duration-300 hover:scale-105 hover:bg-slate-700
-                               border border-slate-700 hover:border-cyan-600 w-32 h-32 justify-center
-                               animate-fade-in-up" // Staggered animation for skills
-                               style={{ animationDelay: `${0.05 * skillIndex + (categoryIndex * 0.1)}s` }}
-                  >
-                    <skill.icon className="w-12 h-12 mb-3 text-cyan-400" /> {/* Larger icons, cyan color */}
-                    <span className="text-sm font-medium text-slate-200 font-code">
-                      {skill.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+const skillCardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
 };
+
+const Skills = () => (
+  <section id="skills" className="py-20 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl">
+      <h2 className="flex items-center text-3xl font-bold text-slate-100 mb-12">
+        <span className="text-cyan-400 font-code text-2xl mr-4">03.</span> My Skills
+        <div className="flex-grow h-px bg-slate-700 ml-6" />
+      </h2>
+
+      <div className="space-y-16">
+        {categories.map((cat, i) => (
+          <div key={cat.name} className="" >
+            <h3 className="text-2xl font-semibold text-cyan-300 mb-6 font-code">{cat.name}</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+              {cat.skills.map((skill, j) => {
+                const Icon = skill.icon;
+                return (
+                  <motion.div
+                    key={skill.name}
+                    className="flex flex-col items-center bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700 hover:border-cyan-600 transition-transform transform hover:scale-105"
+                    variants={skillCardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: 0.1 * i + 0.05 * j }}
+                  >
+                    <Icon className="w-10 h-10 mb-3 text-cyan-400" />
+                    <span className="text-sm font-medium font-code text-slate-200">{skill.name}</span>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default Skills;

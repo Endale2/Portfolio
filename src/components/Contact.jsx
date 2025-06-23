@@ -1,148 +1,119 @@
 import React, { useState } from 'react';
-import { FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'; // Added social icons
+import { FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+
+const socialLinks = [
+  { icon: FaGithub, url: 'https://github.com/yourusername', label: 'GitHub' },
+  { icon: FaLinkedin, url: 'https://linkedin.com/in/yourprofile', label: 'LinkedIn' },
+  { icon: FaTwitter, url: 'https://twitter.com/yourhandle', label: 'Twitter' }
+];
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2, delayChildren: 0.3 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 12 } }
+};
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [data, setData] = useState({ name: '', email: '', message: '' });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = e => {
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const { email, message, name } = formData;
-    // URL-encode the components for the mailto link
-    const mailtoLink = `mailto:endale406@gmail.com?subject=${encodeURIComponent("Portfolio Contact: " + name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-
-    // Open the mailto link
-    window.location.href = mailtoLink;
-
-    // Optional: Add a small delay before resetting form to allow mail client to open
-    setTimeout(() => {
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
-      });
-      alert('Your message is being sent! Your mail client should open shortly.');
-    }, 100);
+    const { name, email, message } = data;
+    const mailto = `mailto:endale406@gmail.com?subject=${encodeURIComponent(
+      `Contact from ${name}`
+    )}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
+    window.location.href = mailto;
+    setTimeout(() => setData({ name: '', email: '', message: '' }), 100);
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-4xl"> {/* Increased max-width for consistency */}
-        {/* Section Heading consistent with other sections */}
-        <h2 className="relative flex items-center text-3xl font-bold text-slate-100 mb-12 w-full">
-          <span className="font-code text-2xl text-cyan-400 mr-3">04.</span> {/* Incremented section number */}
-          Get In Touch
-          <span className="flex-grow h-px bg-slate-700 ml-6"></span>
-        </h2>
+    <section id="contact" className="relative py-20 bg-gray-900 text-white px-4 sm:px-6 lg:px-8">
+      <motion.div
+        className="mx-auto max-w-4xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Header */}
+        <motion.div variants={itemVariants} className="flex items-center mb-12">
+          <span className="text-cyan-400 font-code text-2xl mr-4">04.</span>
+          <h2 className="text-3xl font-bold">Let’s Connect</h2>
+          <div className="flex-grow h-px bg-gray-700 ml-6" />
+        </motion.div>
 
-        <div className="text-center mb-10">
-          <p className="text-lg text-slate-300 mb-6 leading-relaxed">
-            I'm currently seeking new opportunities and am always open to collaborating on exciting projects. Whether you have a question, a project idea, or just want to say hello, feel free to reach out!
-          </p>
-          <p className="text-xl font-semibold text-cyan-400 mb-4 font-code">
-            <a href="mailto:endale406@gmail.com" className="hover:underline hover:text-cyan-300 transition-colors duration-200">
-              endale406@gmail.com
-            </a>
-          </p>
-          {/* Optional: Add social media links */}
-          <div className="flex justify-center gap-6 mt-6">
-            <a
-              href="https://github.com/yourusername" // Replace with your GitHub URL
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 group"
-              aria-label="GitHub Profile"
-            >
-              <FaGithub size={32} className="group-hover:scale-110 transition-transform duration-200" />
-            </a>
-            <a
-              href="https://linkedin.com/in/yourprofile" // Replace with your LinkedIn URL
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 group"
-              aria-label="LinkedIn Profile"
-            >
-              <FaLinkedin size={32} className="group-hover:scale-110 transition-transform duration-200" />
-            </a>
-            <a
-              href="https://twitter.com/yourhandle" // Replace with your Twitter URL
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 group"
-              aria-label="Twitter Profile"
-            >
-              <FaTwitter size={32} className="group-hover:scale-110 transition-transform duration-200" />
-            </a>
-          </div>
-        </div>
+        {/* Intro Text */}
+        <motion.p variants={itemVariants} className="text-lg text-gray-300 mb-8 leading-relaxed">
+          I'm open to new opportunities and collaborations. Whether you have a project idea, question, or just want to say hello,
+          send me a message below or find me on social media.
+        </motion.p>
 
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto"> {/* Centered form, adjusted max-width */}
-          <div>
-            <label htmlFor="name" className="sr-only">Your Name</label>
+        {/* Social Icons */}
+        <motion.div variants={itemVariants} className="flex justify-center space-x-6 mb-12">
+          {socialLinks.map(({ icon: Icon, url, label }, idx) => (
+            <a
+              key={idx}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="text-gray-400 hover:text-cyan-400 transition-transform transform hover:scale-110"
+            >
+              <Icon size={28} />
+            </a>
+          ))}
+        </motion.div>
+
+        {/* Contact Form */}
+        <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <input
-              type="text"
-              id="name"
               name="name"
+              type="text"
               placeholder="Your Name"
-              value={formData.name}
+              value={data.name}
               onChange={handleChange}
-              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
-                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
-                         transition duration-300 font-code"
               required
+              className="w-full p-4 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-cyan-500 outline-none font-code"
             />
-          </div>
-          <div>
-            <label htmlFor="email" className="sr-only">Your Email</label>
             <input
-              type="email"
-              id="email"
               name="email"
+              type="email"
               placeholder="Your Email"
-              value={formData.email}
+              value={data.email}
               onChange={handleChange}
-              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
-                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
-                         transition duration-300 font-code"
               required
+              className="w-full p-4 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-cyan-500 outline-none font-code"
             />
           </div>
-          <div>
-            <label htmlFor="message" className="sr-only">Your Message</label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
-                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
-                         transition duration-300 h-40 resize-y font-code custom-scrollbar"
-              required
-            ></textarea>
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-md
-                         transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2
-                         focus:ring-offset-slate-900 shadow-lg hover:shadow-xl font-code"
-            >
-              Send Message <FaPaperPlane className="ml-2 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform duration-300" /> {/* Added subtle animation */}
-            </button>
-          </div>
-        </form>
-      </div>
+          <textarea
+            name="message"
+            rows={6}
+            placeholder="Your Message"
+            value={data.message}
+            onChange={handleChange}
+            required
+            className="w-full p-4 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-cyan-500 outline-none resize-none font-code"
+          />
+          <motion.button
+            type="submit"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 rounded-md shadow-lg transition"
+          >
+            Send Message
+            <FaPaperPlane />
+          </motion.button>
+        </motion.form>
+      </motion.div>
     </section>
   );
 };
