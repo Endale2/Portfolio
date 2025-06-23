@@ -6,7 +6,12 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // Add 'Fira Code' as a new font family
+        code: ['Fira Code', 'monospace'],
+      },
+    },
   },
   plugins: [tailwindcss(),],
 };

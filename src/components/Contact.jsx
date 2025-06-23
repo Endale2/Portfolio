@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'; // Added social icons
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +18,13 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, message, name } = formData;
-    const mailtoLink = `mailto:endale406@gmail.com?subject=Contact Form Submission&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
+    // URL-encode the components for the mailto link
+    const mailtoLink = `mailto:endale406@gmail.com?subject=${encodeURIComponent("Portfolio Contact: " + name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+    
+    // Open the mailto link
     window.location.href = mailtoLink;
+
+    // Reset form after attempting to open mail client
     setFormData({
       name: '',
       email: '',
@@ -27,57 +33,112 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-gray-900 text-white px-6 transition duration-300">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-green-100">Contact Me</h2>
-        <div className="max-w-3xl mx-auto">
-          <p className="text-lg text-green-200 mb-8 text-center">
-            Have a project in mind or just want to say hello? You can also reach me directly at{' '}
-            <span className="font-semibold">endale406@gmail.com</span> or fill out the form below.
+    <section id="contact" className="py-20 md:py-32 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-4xl"> {/* Increased max-width for consistency */}
+        {/* Section Heading consistent with other sections */}
+        <h2 className="relative flex items-center text-3xl font-bold text-slate-100 mb-12 w-full">
+          <span className="font-code text-2xl text-cyan-400 mr-3">04.</span> {/* Incremented section number */}
+          Get In Touch
+          <span className="flex-grow h-px bg-slate-700 ml-6"></span>
+        </h2>
+
+        <div className="text-center mb-10">
+          <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+            I'm currently seeking new opportunities and am always open to collaborating on exciting projects. Whether you have a question, a project idea, or just want to say hello, feel free to reach out!
           </p>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full p-4 rounded-lg bg-gray-800 border border-green-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-4 rounded-lg bg-gray-800 border-green-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
-                required
-              />
-            </div>
-            <div>
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full p-4 rounded-lg bg-gray-800 border-green-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 h-32"
-                required
-              ></textarea>
-            </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-              >
-                Send Message
-              </button>
-            </div>
-          </form>
+          <p className="text-xl font-semibold text-cyan-400 mb-4 font-code">
+            <a href="mailto:endale406@gmail.com" className="hover:underline hover:text-cyan-300 transition-colors duration-200">
+              endale406@gmail.com
+            </a>
+          </p>
+          {/* Optional: Add social media links */}
+          <div className="flex justify-center gap-6 mt-6">
+            <a 
+              href="https://github.com/yourusername" // Replace with your GitHub URL
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200"
+              aria-label="GitHub Profile"
+            >
+              <FaGithub size={32} />
+            </a>
+            <a 
+              href="https://linkedin.com/in/yourprofile" // Replace with your LinkedIn URL
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200"
+              aria-label="LinkedIn Profile"
+            >
+              <FaLinkedin size={32} />
+            </a>
+            <a 
+              href="https://twitter.com/yourhandle" // Replace with your Twitter URL
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-slate-400 hover:text-cyan-400 transition-colors duration-200"
+              aria-label="Twitter Profile"
+            >
+              <FaTwitter size={32} />
+            </a>
+          </div>
         </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto"> {/* Centered form, adjusted max-width */}
+          <div>
+            <label htmlFor="name" className="sr-only">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
+                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
+                         transition duration-300 font-code" // Applied font-code
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="sr-only">Your Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
+                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
+                         transition duration-300 font-code"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="message" className="sr-only">Your Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Your Message"
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full p-4 rounded-md bg-slate-800 border border-slate-700 text-slate-100
+                         placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500
+                         transition duration-300 h-40 resize-y font-code custom-scrollbar" // Increased height, added resize, custom scrollbar
+              required
+            ></textarea>
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-md
+                         transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2
+                         focus:ring-offset-slate-900 shadow-lg hover:shadow-xl font-code" // More vibrant button, consistent font
+            >
+              Send Message <FaPaperPlane className="ml-2" />
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   );
