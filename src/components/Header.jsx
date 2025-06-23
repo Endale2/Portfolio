@@ -18,30 +18,53 @@ const Header = () => {
   // Effect to detect scroll and apply a background style to the header
   useEffect(() => {
     const handleScroll = () => {
-      setHasScrolled(window.scrollY > 10);
+      // Check if window object exists (for SSR compatibility)
+      if (typeof window !== 'undefined') {
+        setHasScrolled(window.scrollY > 10);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
   }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Optional: Prevent body scroll when mobile menu is open
+    // This is often handled by a global state/context or a dedicated hook in larger apps
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : 'unset';
   };
 
-  const NavLink = ({ to, text, icon, onClick }) => (
-    <li className="group">
+  // Close mobile menu on route change (for `react-scroll` links)
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = 'unset'; // Re-enable scroll
+  };
+
+  const NavLink = ({ to, text, icon, onClick, style }) => (
+    <li className="group relative" style={style}> {/* Added relative for potential future hover effects and passed style */}
       <Link
         to={to}
         spy={true}
         smooth={true}
         offset={-70}
         duration={500}
-        activeClass="nav-link-active" // This class is defined in index.css
-        className="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-cyan-400 transition-colors duration-300"
+        activeClass="nav-link-active" // This class is defined in index.css (ensure it's using cyan-400)
+        className="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-cyan-400
+                   transition-colors duration-300 relative py-2 px-3 rounded-md" // Added padding for hover area
         onClick={onClick}
       >
         <span className="text-xl">{icon}</span>
-        <span className="font-code font-medium">{text}</span>
+        <span className="font-code font-medium text-lg">{text}</span> {/* Slightly larger text for clarity */}
+        {/* Underline on hover effect - Developer style */}
+        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
       </Link>
     </li>
   );
@@ -54,8 +77,8 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center h-20">
         {/* Logo */}
-        <div className="logo font-code text-2xl font-bold">
-          <Link to="hero" smooth={true} duration={500} className="cursor-pointer text-white hover:text-cyan-400 transition-colors duration-300">
+        <div className="logo font-code text-3xl md:text-2xl font-bold z-50"> {/* Ensured logo is above mobile menu */}
+          <Link to="hero" smooth={true} duration={500} className="cursor-pointer text-slate-100 hover:text-cyan-400 transition-colors duration-300">
             &lt;ES /&gt;
           </Link>
         </div>
@@ -64,16 +87,16 @@ const Header = () => {
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
             {navLinks.map((link) => (
-              <NavLink key={link.to} {...link} />
+              <NavLink key={link.to} {...link} onClick={closeMobileMenu} /> 
             ))}
           </ul>
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        <div className="md:hidden z-50"> {/* Ensured button is above mobile menu */}
           <button
             onClick={toggleMobileMenu}
-            className="text-gray-300 hover:text-cyan-400 focus:outline-none"
+            className="text-slate-300 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md p-1" // Added ring focus
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -84,14 +107,20 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed top-20 left-0 w-full bg-slate-900/95 backdrop-blur-xl transition-transform duration-500 ease-in-out transform ${
+        className={`md:hidden fixed top-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl transition-transform duration-500 ease-in-out transform ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-        style={{ height: 'calc(100vh - 5rem)' }} // Full viewport height minus header height
+        } z-40`} // Adjusted z-index for mobile menu
+        style={{ height: '100vh', paddingTop: '5rem' }} // Full viewport height with padding for header
       >
         <ul className="flex flex-col items-center justify-center h-full gap-8">
-          {navLinks.map((link) => (
-            <NavLink key={link.to} {...link} onClick={toggleMobileMenu} />
+          {navLinks.map((link, index) => (
+            <NavLink
+              key={link.to}
+              {...link}
+              onClick={closeMobileMenu}
+              // Staggered animation for mobile links
+              style={{ animation: `fadeInRight 0.3s ease-out ${0.1 * index}s forwards`, opacity: 0 }}
+            />
           ))}
         </ul>
       </div>
