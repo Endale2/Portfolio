@@ -14,8 +14,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const projects = [
   {
-  "title": "Custom Shop Builder Platform(Golang, Vuejs) ",
-  "category": "Full-Stack Web (Ongoing)",
+  "title": "[In Progress] Custom Shop Builder Platform(Golang, Vuejs) ",
+  "category": "Full-Stack Web ",
   "description": "A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang. Features include store setup, product management, order processing, and analytics.",
   "coverImage": "/images/drps.png",
   "platform": "web",
