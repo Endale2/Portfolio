@@ -101,10 +101,13 @@ const skillCardVariants = {
 const Skills = () => (
   <section id="skills" className="py-20 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
     <div className="mx-auto max-w-6xl">
-      <h2 className="flex items-center text-3xl font-bold text-slate-100 mb-12">
-        <span className="text-cyan-400 font-code text-2xl mr-4">03.</span> My Skills
-        <div className="flex-grow h-px bg-slate-700 ml-6" />
-      </h2>
+      <div className="flex items-center mb-12">
+                    <span className="text-cyan-400 font-mono text-2xl mr-4">03.</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                        My Skills
+                    </h2>
+                    <div className="flex-grow h-px bg-slate-700 ml-6" />
+                </div>
 
       <div className="space-y-16">
         {categories.map((cat, i) => (

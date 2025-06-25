@@ -45,8 +45,13 @@ const Contact = () => {
       >
         {/* Header */}
         <motion.div variants={itemVariants} className="flex items-center mb-12">
-          <span className="text-cyan-400 font-code text-2xl mr-4">04.</span>
-          <h2 className="text-3xl font-bold">Let’s Connect</h2>
+          <div className="flex items-center mb-12">
+                    <span className="text-cyan-400 font-mono text-2xl mr-4">04.</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                        Let's  Connect
+                    </h2>
+                    <div className="flex-grow h-px bg-slate-700 ml-6" />
+                </div>
           <div className="flex-grow h-px bg-gray-700 ml-6" />
         </motion.div>
 

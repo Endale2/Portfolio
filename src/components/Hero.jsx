@@ -86,7 +86,7 @@ const Hero = () => {
           </Link>
 
           <a
-            href="/Endale_Shimelis_CV.pdf"
+            href="/endale.pdf"
             download
             className="flex items-center gap-2 px-6 py-3 bg-cyan-600 text-white rounded-lg font-medium transition-transform duration-300 hover:scale-105"
           >
