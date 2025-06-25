@@ -18,10 +18,10 @@ const projects = [
     category: "Full-Stack Web",
     description:
       "A web platform built with the MERN stack where users can share their favorite Ethiopian recipes, save others’ recipes, and explore a variety of traditional dishes shared by the community.",
-    coverImage: "https://via.placeholder.com/400x250/1a202c/edf2f7?text=DevPortfolio",
+    coverImage: "/images/mern-recipe.png",
     platform: "web",
-    website: "https://devportfolio-template-demo.vercel.app",
-    github: "https://github.com/endale-dev/devportfolio-template"
+    website: "https://mern-ethiopian-recipes.vercel.app",
+    github: "https://github.com/Endale2/MERN-Ethiopian-Recipes"
   },
   {
     title: "E-commerce REST API",
