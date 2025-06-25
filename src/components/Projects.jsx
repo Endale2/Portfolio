@@ -27,7 +27,7 @@ const projects = [
     title: "Ethiopian Recipe Sharing Platform (MERN Stack)",
     category: "Full-Stack Web",
     description:
-      "A feature-rich web platform built with the **MERN stack** (MongoDB, Express.js, React, Node.js) for passionate food enthusiasts. Users can **discover, share, and save** their favorite Ethiopian recipes, fostering a vibrant community around traditional dishes. Key features include **user authentication, recipe CRUD operations, search functionality, and user profiles**.",
+      "A feature-rich web platform built with the MERN stack (MongoDB, Express.js, React, Node.js) for passionate food enthusiasts. Users can discover, share, and save their favorite Ethiopian recipes, fostering a vibrant community around traditional dishes. Key features include user authentication, recipe CRUD operations, search functionality, and user profiles.",
     coverImage: "/images/mern-recipe.png", 
     platform: "web",
     website: "https://mern-ethiopian-recipes.vercel.app",
@@ -37,7 +37,7 @@ const projects = [
     title: "Basic Social Networking App (Flutter & BLoC)",
     category: "Mobile App",
     description:
-      "A foundational **mobile social networking application** developed using **Flutter** for cross-platform compatibility and **BLoC (Business Logic Component)** for state management. It leverages **Firebase** for secure user authentication and real-time database operations, and **Supabase** for efficient file storage (e.g., user avatars, post images).",
+      "A foundational mobile social networking application developed using Flutter for cross-platform compatibility and BLoC (Business Logic Component) for state management. It leverages Firebase for secure user authentication and real-time database operations, and Supabase for efficient file storage (e.g., user avatars, post images).",
     coverImage: "/images/socialX.png", 
     platform: "Android",
     github: "https://github.com/Endale2/Social-Media-App-flutter-bloc-firebase-",
@@ -47,7 +47,7 @@ const projects = [
     title: "Telegather CLI Tool",
     category: "CLI Tool",
     description:
-      "A versatile and lightweight **Command Line Interface (CLI) tool** designed to **efficiently scrape messages from public Telegram channels** and export them to a **CSV file**. It offers both **flag-driven arguments** for quick execution and an **interactive mode** for user-friendly configuration, complete with a **visually appealing colored banner**.",
+      "A versatile and lightweight Command Line Interface (CLI) tool designed to efficiently scrape messages from public Telegram channels and export them to a CSV file. It offers both flag-driven arguments for quick execution and an interactive mode for user-friendly configuration, complete with a visually appealing colored banner.",
     coverImage: "/images/telegather.png", 
     platform: "cmd",
     github: "https://github.com/Endale2/telegather",
