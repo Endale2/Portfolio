@@ -3,9 +3,9 @@ import { FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const socialLinks = [
-  { icon: FaGithub, url: 'https://github.com/yourusername', label: 'GitHub' },
-  { icon: FaLinkedin, url: 'https://linkedin.com/in/yourprofile', label: 'LinkedIn' },
-  { icon: FaTwitter, url: 'https://twitter.com/yourhandle', label: 'Twitter' }
+  { icon: FaGithub, url: 'https://github.com/Endale2', label: 'GitHub' },
+  { icon: FaLinkedin, url: 'https://linkedin.com/in/endale25', label: 'LinkedIn' },
+  { icon: FaTwitter, url: 'https://twitter.com/25endale', label: 'Twitter' }
 ];
 
 const containerVariants = {

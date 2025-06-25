@@ -2,10 +2,10 @@ import React from 'react';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegramPlane, FaHeart } from 'react-icons/fa';
 
 const socialLinks = [
-  { icon: FaTwitter, url: 'https://twitter.com/yourhandle', label: 'Twitter' },
-  { icon: FaLinkedin, url: 'https://linkedin.com/in/yourprofile', label: 'LinkedIn' },
-  { icon: FaGithub, url: 'https://github.com/yourusername', label: 'GitHub' },
-  { icon: FaTelegramPlane, url: 'https://t.me/yourhandle', label: 'Telegram' }
+  { icon: FaTwitter, url: 'https://twitter.com/25endale', label: 'Twitter' },
+  { icon: FaLinkedin, url: 'https://linkedin.com/in/endale25', label: 'LinkedIn' },
+  { icon: FaGithub, url: 'https://github.com/Endale2', label: 'GitHub' },
+  { icon: FaTelegramPlane, url: 'https://t.me/t.me/codejkr', label: 'Telegram' }
 ];
 
 const Footer = () => {
