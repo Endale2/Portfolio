@@ -22,13 +22,45 @@ import {
   SiGraphql,
   SiTailwindcss,
   SiSass,
-  SiNodedotjs, // Corrected import for Node.js
-  SiC // Added import for C language
+  SiNodedotjs,
+  SiC
 } from 'react-icons/si';
 
-// Note: If you want to include specific backend frameworks for Python/Go,
-// you might want to consider specific icons if available (e.g., SiDjango for Django)
-// or use the language icon as a placeholder. For Gin, SiGo is appropriate.
+// Particle component for background animation
+const Particle = () => {
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const scale = Math.random() * 1.5 + 0.5;
+    const duration = Math.random() * 8 + 5;
+    const delay = Math.random() * 5;
+    const size = Math.random() * 3 + 1;
+
+    return (
+        <motion.div
+            className="absolute bg-cyan-400/20 rounded-full pointer-events-none"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+                x: `${x}vw`,
+                y: `${y}vh`,
+                scale: [0, scale, 0],
+                opacity: [0, 0.4, 0],
+            }}
+            transition={{
+                duration,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay,
+            }}
+            style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                filter: 'blur(1px)',
+                top: 0,
+                left: 0,
+            }}
+        />
+    );
+};
 
 const categories = [
   {
@@ -37,7 +69,7 @@ const categories = [
       { name: 'JavaScript', icon: SiJavascript },
       { name: 'Python', icon: SiPython },
       { name: 'Go', icon: SiGo },
-      { name: 'C', icon: SiC } // Added C language
+      { name: 'C', icon: SiC }
     ]
   },
   {
@@ -60,9 +92,9 @@ const categories = [
   {
     name: 'Backend',
     skills: [
-      { name: 'Node.js', icon: SiNodedotjs }, // Corrected icon for Node.js
-      { name: 'Django', icon: SiPython }, // Django framework
-      { name: 'Gin Framework', icon: SiGo }, // Added Gin Framework with Go icon
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'Django', icon: SiPython },
+      { name: 'Gin Framework', icon: SiGo },
       { name: 'GraphQL', icon: SiGraphql }
     ]
   },
@@ -95,43 +127,69 @@ const categories = [
 
 const skillCardVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
 };
 
 const Skills = () => (
-  <section id="skills" className="py-20 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-6xl">
-      <div className="flex items-center mb-12">
-                    <span className="text-cyan-400 font-mono text-2xl mr-4">03.</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                        My Skills
-                    </h2>
-                    <div className="flex-grow h-px bg-slate-700 ml-6" />
-                </div>
+  <section id="skills" className="relative section-padding bg-slate-900 text-white overflow-hidden">
+    {/* Background particle effect */}
+    <div className="absolute inset-0 z-0 opacity-20">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <Particle key={i} />
+      ))}
+    </div>
 
-      <div className="space-y-16">
+    <div className="relative z-10 container-responsive">
+      {/* Section Header */}
+      <div className="flex items-center mb-16">
+        <span className="text-cyan-400 font-code text-2xl mr-4">03.</span>
+        <h2 className="text-3xl md:text-4xl font-bold gradient-text">
+          My Skills
+        </h2>
+        <div className="flex-grow h-px bg-slate-700 ml-6" />
+      </div>
+
+      <div className="space-y-12 md:space-y-16">
         {categories.map((cat, i) => (
-          <div key={cat.name} className="" >
-            <h3 className="text-2xl font-semibold text-cyan-300 mb-6 font-code">{cat.name}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+          <motion.div 
+            key={cat.name} 
+            className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/50"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <h3 className="text-xl md:text-2xl font-semibold text-cyan-300 mb-6 md:mb-8 font-code border-b border-slate-700 pb-3 md:pb-4">
+              {cat.name}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
               {cat.skills.map((skill, j) => {
                 const Icon = skill.icon;
                 return (
                   <motion.div
                     key={skill.name}
-                    className="flex flex-col items-center bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700 hover:border-cyan-600 transition-transform transform hover:scale-105"
+                    className="flex flex-col items-center bg-slate-800/50 p-4 md:p-6 rounded-xl shadow-lg border border-slate-700 hover:border-cyan-600 transition-all duration-300 card-hover group"
                     variants={skillCardVariants}
                     initial="hidden"
-                    animate="visible"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{ delay: 0.1 * i + 0.05 * j }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${skill.name} skill`}
                   >
-                    <Icon className="w-10 h-10 mb-3 text-cyan-400" />
-                    <span className="text-sm font-medium font-code text-slate-200">{skill.name}</span>
+                    <div className="relative mb-3 md:mb-4">
+                      <Icon className="w-10 h-10 md:w-12 md:h-12 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300" />
+                      <div className="absolute inset-0 bg-cyan-400/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </div>
+                    <span className="text-xs md:text-sm font-medium font-code text-slate-200 text-center group-hover:text-cyan-300 transition-colors duration-300 leading-tight">
+                      {skill.name}
+                    </span>
                   </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
