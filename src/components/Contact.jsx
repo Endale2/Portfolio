@@ -2,42 +2,6 @@ import React, { useState } from 'react';
 import { FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-// Particle component for background animation
-const Particle = () => {
-    const x = Math.random() * 100;
-    const y = Math.random() * 100;
-    const scale = Math.random() * 1.5 + 0.5;
-    const duration = Math.random() * 8 + 5;
-    const delay = Math.random() * 5;
-    const size = Math.random() * 3 + 1;
-
-    return (
-        <motion.div
-            className="absolute bg-cyan-400/20 rounded-full pointer-events-none"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-                x: `${x}vw`,
-                y: `${y}vh`,
-                scale: [0, scale, 0],
-                opacity: [0, 0.4, 0],
-            }}
-            transition={{
-                duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay,
-            }}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                filter: 'blur(1px)',
-                top: 0,
-                left: 0,
-            }}
-        />
-    );
-};
-
 const socialLinks = [
   { icon: FaGithub, url: 'https://github.com/Endale2', label: 'GitHub' },
   { icon: FaLinkedin, url: 'https://linkedin.com/in/endale25', label: 'LinkedIn' },
@@ -85,13 +49,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="relative section-padding bg-slate-900 text-white overflow-hidden">
-      {/* Background particle effect */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <Particle key={i} />
-        ))}
-      </div>
-
       <motion.div
         className="relative z-10 container-responsive"
         variants={containerVariants}
@@ -201,8 +158,8 @@ const Contact = () => {
               </>
             ) : (
               <>
+                <FaPaperPlane className="w-4 h-4" />
                 Send Message
-                <FaPaperPlane className="animate-pulse" />
               </>
             )}
           </motion.button>

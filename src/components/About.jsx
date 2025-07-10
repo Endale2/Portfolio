@@ -2,44 +2,6 @@ import React from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
-// A more subtle and performant particle component for the background.
-const Particle = () => {
-    // Generate random properties for each particle's animation
-    const x = Math.random() * 100; // Position across the width (in vw)
-    const y = Math.random() * 100; // Position across the height (in vh)
-    const scale = Math.random() * 1.5 + 0.5; // Random scale between 0.5 and 2
-    const duration = Math.random() * 8 + 5; // Random duration between 5s and 13s
-    const delay = Math.random() * 5; // Random delay up to 5s
-    const size = Math.random() * 3 + 1; // Random size between 1px and 4px
-
-    return (
-        <motion.div
-            className="absolute bg-cyan-400/20 rounded-full pointer-events-none"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-                // Animate to a random position within the viewport
-                x: `${x}vw`,
-                y: `${y}vh`,
-                scale: [0, scale, 0], // Scale up and then back down
-                opacity: [0, 0.4, 0],
-            }}
-            transition={{
-                duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay,
-            }}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                filter: 'blur(1px)', // A soft blur effect
-                top: 0,
-                left: 0,
-            }}
-        />
-    );
-};
-
 // Core tech skills for easy updates
 const skills = [
     'Go, Python & Node.js',
@@ -74,13 +36,6 @@ const About = () => {
 
     return (
         <section id="about" className="relative section-padding bg-slate-900 text-white overflow-hidden">
-            {/* Background particle effect */}
-            <div className="absolute inset-0 z-0 opacity-20">
-                {Array.from({ length: 15 }).map((_, i) => (
-                    <Particle key={i} />
-                ))}
-            </div>
-
             {/* Main content container with glassmorphism effect */}
             <motion.div
                 className="relative z-10 container-responsive"

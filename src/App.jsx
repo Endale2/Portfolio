@@ -6,12 +6,14 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import BackgroundAnimation from './components/BackgroundAnimation';
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen"> {/* Flex column and min-h-screen for the app */}
+    <div className="flex flex-col min-h-screen relative"> {/* Added relative positioning */}
+      <BackgroundAnimation />
       <Header />
-      <main className="flex-grow"> {/* Allow main to grow and fill available space */}
+      <main className="flex-grow relative z-10"> {/* Added relative z-10 to ensure content is above background */}
         <Hero />
         <About />
         <Projects />
