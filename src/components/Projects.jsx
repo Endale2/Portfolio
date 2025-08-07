@@ -9,8 +9,9 @@ import {
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-// Font stack for code/dev look
-const codeFont = 'font-["JetBrains Mono","Fira Code","Menlo","monospace"]';
+// Font classes
+const codeFont = 'font-["JetBrains Mono","Fira Code","Monaco","Cascadia Code","Roboto Mono",Consolas,"Courier New",monospace]';
+const sansFont = 'font-sans';
 
 // ============================================================================
 // 1. DATA SOURCE
@@ -91,12 +92,12 @@ const platformIcons = {
 
 const statusStyles = {
     completed: {
-        border: 'border-green-500 shadow-green-400/30',
+        border: 'border-green-400 shadow-green-400/30',
         badge: 'bg-green-500/90 text-white',
     },
     'in-progress': {
         border: 'border-yellow-400 shadow-yellow-300/30',
-        badge: 'bg-yellow-500/90 text-slate-900',
+        badge: 'bg-yellow-400/90 text-slate-900',
     },
 };
 
@@ -138,7 +139,7 @@ function ProjectCard({ project, index, isLeft }) {
 
     return (
         <motion.div
-            className={`relative flex flex-col md:flex-row items-center md:items-stretch ${isLeft ? 'md:flex-row-reverse' : ''} bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-950/90 rounded-2xl shadow-xl border border-slate-700/80 p-4 md:p-6 gap-4 md:gap-8 transition-all duration-300`}
+            className={`relative flex flex-col md:flex-row items-center md:items-stretch ${isLeft ? 'md:flex-row-reverse' : ''} glass rounded-2xl shadow-xl border-2 ${currentStatusStyles.border} p-4 md:p-6 gap-4 md:gap-8 transition-all duration-300 group hover:border-cyan-400/80 hover:shadow-cyan-400/20`}
             custom={index}
             initial="hidden"
             whileInView="visible"
@@ -168,7 +169,7 @@ function ProjectCard({ project, index, isLeft }) {
                         {status === 'completed' ? 'Completed' : 'In Progress'}
                     </span>
                 </div>
-                <p className={`text-slate-200 text-xs md:text-sm leading-relaxed mb-2 ${codeFont}`}>{description}</p>
+                <p className={`text-slate-200 text-xs md:text-sm leading-relaxed mb-2 ${sansFont}`}>{description}</p>
                 <div className="flex flex-wrap gap-2 mt-auto pt-2">{renderLinks()}</div>
             </div>
         </motion.div>
@@ -181,27 +182,27 @@ function ProjectCard({ project, index, isLeft }) {
 // ============================================================================
 function Projects() {
     return (
-        <section id="projects" className={`relative py-16 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden ${codeFont}`}>
+        <section id="projects" className={`relative py-16 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden`}>
             <div className="relative z-10 max-w-5xl mx-auto px-2 md:px-6">
                 {/* Section Header */}
                 <div className="flex items-center mb-14 md:mb-20">
-                    <span className={`text-cyan-400 ${codeFont} text-2xl md:text-3xl mr-4`}>02.</span>
-                    <h2 className={`text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight ${codeFont}`}>
-                        My Projects
+                    <span className={`text-cyan-400 ${codeFont} text-2xl md:text-3xl mr-4 bg-slate-800/70 px-3 py-1 rounded-lg shadow border border-cyan-400/30 animate-pulse`}>03.</span>
+                    <h2 className={`text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight ${codeFont} flex items-center gap-2`}>
+                        <span className="text-cyan-400">&#123;</span> Projects <span className="text-cyan-400">&#125;</span>
                     </h2>
-                    <div className="flex-grow h-px bg-slate-700 ml-6" />
+                    <div className="flex-grow h-px bg-gradient-to-r from-cyan-400/30 via-slate-700 to-transparent ml-6" />
                 </div>
 
                 {/* Timeline Layout */}
                 <div className="relative">
                     {/* Vertical line for desktop */}
-                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-700/30 to-transparent -translate-x-1/2" />
+                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-700/30 to-transparent -translate-x-1/2 animate-pulse" />
                     <div className="flex flex-col gap-14 md:gap-20">
                         {projects.map((proj, i) => (
                             <div key={i} className="relative flex justify-center">
                                 {/* Timeline Dot for desktop */}
                                 <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 w-full items-center justify-center z-10">
-                                    <div className="w-5 h-5 rounded-full bg-cyan-400 border-4 border-slate-900 shadow-lg" />
+                                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border-4 border-slate-900 shadow-lg animate-pulse" />
                                 </div>
                                 <ProjectCard project={proj} index={i} isLeft={i % 2 !== 0} />
                             </div>

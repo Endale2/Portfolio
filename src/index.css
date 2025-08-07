@@ -3,6 +3,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font imports for code/dev look */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Fira+Code:wght@400;600;700&display=swap');
+
+html, body {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a192f 100%);
+  min-height: 100vh;
+  color: #e0e7ef;
+}
+
+/* Animated gradient background for the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(120deg, #0ea5e9 0%, #6366f1 100%);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: bgMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
 /* Active navigation link styles */
 .nav-link-active {
   color: #22d3ee !important; /* cyan-400 */

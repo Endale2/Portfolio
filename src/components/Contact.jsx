@@ -19,8 +19,11 @@ const itemVariants = {
 };
 
 const Contact = () => {
+
   const [data, setData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const codeFont = 'font-["JetBrains Mono","Fira Code","Monaco","Cascadia Code","Roboto Mono",Consolas,"Courier New",monospace]';
+  const sansFont = 'font-sans';
 
   const handleChange = e => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -29,13 +32,9 @@ const Contact = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setIsSubmitting(true);
-    
     try {
       const { name, email, message } = data;
-      const mailto = `mailto:endale406@gmail.com?subject=${encodeURIComponent(
-        `Contact from ${name}`
-      )}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
-      
+      const mailto = `mailto:endale406@gmail.com?subject=${encodeURIComponent(`Contact from ${name}`)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
       window.location.href = mailto;
       setTimeout(() => {
         setData({ name: '', email: '', message: '' });
@@ -48,27 +47,28 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative section-padding bg-slate-900 text-white overflow-hidden">
+    <section id="contact" className="relative py-16 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden">
       <motion.div
-        className="relative z-10 container-responsive"
+        className="relative z-10 max-w-4xl mx-auto px-2 md:px-6"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        {/* Header */}
-        <motion.div variants={itemVariants} className="flex items-center mb-16">
-          <span className="text-cyan-400 font-code text-2xl mr-4">04.</span>
-          <h2 className="text-3xl md:text-4xl font-bold gradient-text">
-            Let's Connect
+        {/* Section Header */}
+        <motion.div variants={itemVariants} className="flex items-center mb-14 md:mb-20">
+          <span className={`text-cyan-400 ${codeFont} text-2xl md:text-3xl mr-4 bg-slate-800/70 px-3 py-1 rounded-lg shadow border border-cyan-400/30 animate-pulse`}>
+            04.
+          </span>
+          <h2 className={`text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight ${codeFont} flex items-center gap-2`}>
+            <span className="text-cyan-400">&#123;</span> Let's Connect <span className="text-cyan-400">&#125;</span>
           </h2>
-          <div className="flex-grow h-px bg-slate-700 ml-6" />
+          <div className="flex-grow h-px bg-gradient-to-r from-cyan-400/30 via-slate-700 to-transparent ml-6" />
         </motion.div>
 
         {/* Intro Text */}
-        <motion.p variants={itemVariants} className="text-base md:text-lg text-slate-300 mb-12 leading-relaxed max-w-3xl mx-auto text-center">
-          I'm open to new opportunities and collaborations. Whether you have a project idea, question, or just want to say hello,
-          send me a message below or find me on social media.
+        <motion.p variants={itemVariants} className={`text-base md:text-lg text-slate-300 mb-12 leading-relaxed max-w-3xl mx-auto text-center ${sansFont}`}>
+          I'm open to new opportunities and collaborations. Whether you have a project idea, question, or just want to say hello, send me a message below or find me on social media.
         </motion.p>
 
         {/* Social Icons */}
@@ -80,7 +80,7 @@ const Contact = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="text-slate-400 hover:text-cyan-400 transition-all duration-300 transform hover:scale-110 hover:rotate-3 p-3 rounded-full bg-slate-800/50 hover:bg-slate-800/80 border border-slate-700 hover:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              className={`text-cyan-300 bg-slate-800/80 hover:bg-cyan-700/90 transition-all duration-300 rounded-full p-3 border border-slate-700 hover:border-cyan-400/50 shadow-md hover:scale-110 focus:outline-none focus:ring-2 focus:ring-cyan-500 ${codeFont}`}
             >
               <Icon size={24} className="md:w-7 md:h-7" />
             </a>
@@ -88,16 +88,14 @@ const Contact = () => {
         </motion.div>
 
         {/* Contact Form */}
-        <motion.form 
-          variants={itemVariants} 
-          onSubmit={handleSubmit} 
+        <motion.form
+          variants={itemVariants}
+          onSubmit={handleSubmit}
           className="max-w-2xl mx-auto bg-slate-800/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/50"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-6">
             <div className="relative">
-              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
-                Name *
-              </label>
+              <label htmlFor="name" className={`block text-sm font-medium text-slate-300 mb-2 ${codeFont}`}>Name *</label>
               <input
                 id="name"
                 name="name"
@@ -106,14 +104,12 @@ const Contact = () => {
                 value={data.name}
                 onChange={handleChange}
                 required
-                className="w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none font-code text-slate-200 placeholder-slate-400 transition-all duration-300"
+                className={`w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none ${codeFont} text-slate-200 placeholder-slate-400 transition-all duration-300`}
                 aria-describedby="name-error"
               />
             </div>
             <div className="relative">
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
-                Email *
-              </label>
+              <label htmlFor="email" className={`block text-sm font-medium text-slate-300 mb-2 ${codeFont}`}>Email *</label>
               <input
                 id="email"
                 name="email"
@@ -122,15 +118,13 @@ const Contact = () => {
                 value={data.email}
                 onChange={handleChange}
                 required
-                className="w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none font-code text-slate-200 placeholder-slate-400 transition-all duration-300"
+                className={`w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none ${codeFont} text-slate-200 placeholder-slate-400 transition-all duration-300`}
                 aria-describedby="email-error"
               />
             </div>
           </div>
           <div className="relative mb-8">
-            <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
-              Message *
-            </label>
+            <label htmlFor="message" className={`block text-sm font-medium text-slate-300 mb-2 ${codeFont}`}>Message *</label>
             <textarea
               id="message"
               name="message"
@@ -139,7 +133,7 @@ const Contact = () => {
               value={data.message}
               onChange={handleChange}
               required
-              className="w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none resize-none font-code text-slate-200 placeholder-slate-400 transition-all duration-300"
+              className={`w-full p-3 md:p-4 bg-slate-800/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none resize-none ${codeFont} text-slate-200 placeholder-slate-400 transition-all duration-300`}
               aria-describedby="message-error"
             />
           </div>
@@ -149,7 +143,7 @@ const Contact = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={isSubmitting}
-            className="flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 disabled:from-slate-600 disabled:to-slate-700 rounded-lg shadow-lg transition-all duration-300 font-semibold text-white w-full sm:w-auto justify-center disabled:cursor-not-allowed"
+            className={`flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 disabled:from-slate-600 disabled:to-slate-700 rounded-lg shadow-lg transition-all duration-300 font-semibold text-white w-full sm:w-auto justify-center disabled:cursor-not-allowed ${codeFont}`}
           >
             {isSubmitting ? (
               <>
