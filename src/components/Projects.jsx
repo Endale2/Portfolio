@@ -18,8 +18,17 @@ const sansFont = 'font-sans';
 // Centralized project data. Easy to add, remove, or update projects.
 // ============================================================================
 const projects = [
+     {
+        title: 'n8n AutoNewsBot – Intelligent RSS to Telegram Automation with OpenAI',
+        category: 'n8n  AI Automation',
+        description:
+            'AutoNewsBot is a fully automated content curation workflow built using n8n, designed to fetch, analyze, and rewrite trending articles from RSS feeds using OpenAI for more engaging, human-like summaries. It enhances each post with relevant thumbnails and publishes them to a Telegram channel every hour, creating a consistent, smart news delivery system with zero manual effort.',
+        coverImage: '/images/n8n.png',
+       
+        status: 'completed',
+    },
     {
-        title: '[In Progress] Custom Shop Builder Platform',
+        title: 'Custom Shop Builder Platform',
         category: 'Full-Stack Web (Go, Vue.js)',
         description:
             'A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang.',
@@ -139,28 +148,32 @@ function ProjectCard({ project, index, isLeft }) {
 
     return (
         <motion.div
-            className={`relative flex flex-col md:flex-row items-center md:items-stretch ${isLeft ? 'md:flex-row-reverse' : ''} glass rounded-2xl shadow-xl border-2 ${currentStatusStyles.border} p-4 md:p-6 gap-4 md:gap-8 transition-all duration-300 group hover:border-cyan-400/80 hover:shadow-cyan-400/20`}
+            className={`relative flex flex-col md:flex-row items-center md:items-stretch ${isLeft ? 'md:flex-row-reverse' : ''} glass rounded-2xl shadow-2xl border-2 ${currentStatusStyles.border} p-4 md:p-7 gap-4 md:gap-10 transition-all duration-300 group hover:border-cyan-400/80 hover:shadow-cyan-400/30 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-cyan-400/60 backdrop-blur-xl`}
             custom={index}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={timelineVariants}
+            tabIndex={0}
+            aria-label={`Project: ${title}`}
         >
             {/* Image Section */}
             <div className="md:w-1/2 w-full flex justify-center items-center px-2 md:px-4 mt-3 md:mt-0 relative group">
+                <div className="absolute -top-3 -left-3 w-10 h-10 bg-cyan-400/10 rounded-full blur-xl z-0 animate-pulse" />
                 <img
                     src={coverImage}
                     alt={`${title} preview`}
-                    className={`w-full max-w-xs h-36 md:h-44 object-cover rounded-xl border-4 ${currentStatusStyles.border} shadow-lg group-hover:scale-105 transition-transform duration-500 cursor-pointer`}
+                    className={`w-full max-w-xs h-36 md:h-44 object-cover rounded-xl border-4 ${currentStatusStyles.border} shadow-lg group-hover:scale-105 transition-transform duration-500 cursor-pointer relative z-10`}
                 />
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/60 to-transparent rounded-b-xl p-3 flex flex-col gap-1">
+                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/60 to-transparent rounded-b-xl p-3 flex flex-col gap-1 z-10">
                     <h3 className={`text-lg font-bold text-white drop-shadow-md truncate ${codeFont}`}>{title}</h3>
                     <span className={`text-cyan-300 text-xs ${codeFont}`}>{category}</span>
                 </div>
+                <div className="absolute -bottom-3 right-3 w-8 h-8 bg-blue-500/10 rounded-full blur-xl z-0 animate-pulse" />
             </div>
 
             {/* Content Section */}
-            <div className={`md:w-1/2 w-full px-2 md:px-4 py-3 md:py-0 flex flex-col justify-center ${isLeft ? 'md:pr-8' : 'md:pl-8'} gap-2`}> 
+            <div className={`md:w-1/2 w-full px-2 md:px-4 py-3 md:py-0 flex flex-col justify-center ${isLeft ? 'md:pr-10' : 'md:pl-10'} gap-2`}> 
                 <div className="flex items-center gap-2 mb-1">
                     <span className="bg-slate-800/90 p-2 rounded-lg border border-slate-700 text-cyan-400">
                         {platformIcons[platform]}
@@ -182,8 +195,15 @@ function ProjectCard({ project, index, isLeft }) {
 // ============================================================================
 function Projects() {
     return (
-        <section id="projects" className={`relative py-16 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden`}>
+        <section id="projects" className={`relative py-20 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden`}>
+            {/* Animated code-inspired background overlay */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+                <div className="absolute left-1/4 top-0 w-1/2 h-full bg-gradient-to-b from-cyan-400/10 via-blue-500/10 to-transparent animate-pulse rounded-full blur-2xl" />
+                <div className="absolute right-0 top-1/3 w-1/4 h-1/2 bg-cyan-400/10 rounded-full blur-2xl animate-pulse" />
+            </div>
             <div className="relative z-10 max-w-5xl mx-auto px-2 md:px-6">
+                {/* Code-style comment above section header */}
+                <div className={`mb-2 text-cyan-400/70 text-xs md:text-sm pl-2 select-none ${codeFont}`}>{'// Featured Projects'}</div>
                 {/* Section Header */}
                 <div className="flex items-center mb-14 md:mb-20">
                     <span className={`text-cyan-400 ${codeFont} text-2xl md:text-3xl mr-4 bg-slate-800/70 px-3 py-1 rounded-lg shadow border border-cyan-400/30 animate-pulse`}>03.</span>
@@ -195,14 +215,14 @@ function Projects() {
 
                 {/* Timeline Layout */}
                 <div className="relative">
-                    {/* Vertical line for desktop */}
-                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-700/30 to-transparent -translate-x-1/2 animate-pulse" />
-                    <div className="flex flex-col gap-14 md:gap-20">
+                    {/* Glowing animated vertical line for desktop */}
+                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-cyan-400/80 via-blue-500/60 to-transparent -translate-x-1/2 animate-pulse shadow-2xl" />
+                    <div className="flex flex-col gap-16 md:gap-24">
                         {projects.map((proj, i) => (
                             <div key={i} className="relative flex justify-center">
-                                {/* Timeline Dot for desktop */}
+                                {/* Floating Timeline Dot for desktop */}
                                 <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 w-full items-center justify-center z-10">
-                                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border-4 border-slate-900 shadow-lg animate-pulse" />
+                                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border-4 border-slate-900 shadow-2xl animate-pulse ring-4 ring-cyan-400/20" />
                                 </div>
                                 <ProjectCard project={proj} index={i} isLeft={i % 2 !== 0} />
                             </div>
