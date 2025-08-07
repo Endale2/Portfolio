@@ -52,7 +52,7 @@ const About = () => {
                     className={`glass rounded-2xl border-2 border-cyan-400/20 shadow-xl p-5 md:p-8 text-slate-200 text-sm md:text-base leading-relaxed ${sansFont}`}
                 >
                     <p className="mb-3">
-                        I architect and build robust backends using Go, Python, and Node.js, and craft engaging frontends with Next.js, Nuxt.js, React, and Vue. My eye for clean UI/UX styling ensures every application feels polished and intuitive.
+                        I design and build robust backends using Go, Python, and Node.js, and craft engaging frontends with Next.js, Nuxt.js, React, and Vue. My eye for clean UI/UX styling ensures every application feels polished and intuitive.
                     </p>
                     <p className="mb-3">
                         Beyond full-stack development, I dive into machine learning and computer vision projects—applying algorithms that turn data into actionable insights and smart features.

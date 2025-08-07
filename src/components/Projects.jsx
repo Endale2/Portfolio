@@ -5,8 +5,9 @@ import {
     FaMobileAlt,
     FaGlobe,
     FaRocket,
-    FaDownload,
+    FaDownload
 } from 'react-icons/fa';
+import { FaRobot } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 
 // Font classes
@@ -24,7 +25,7 @@ const projects = [
         description:
             'AutoNewsBot is a fully automated content curation workflow built using n8n, designed to fetch, analyze, and rewrite trending articles from RSS feeds using OpenAI for more engaging, human-like summaries. It enhances each post with relevant thumbnails and publishes them to a Telegram channel every hour, creating a consistent, smart news delivery system with zero manual effort.',
         coverImage: '/images/n8n.png',
-       
+       platform:"bot",
         status: 'completed',
     },
     {
@@ -97,6 +98,7 @@ const platformIcons = {
     web: <FaGlobe />,
     mobile: <FaMobileAlt />,
     cli: <FaPython />,
+    bot: <FaRobot />
 };
 
 const statusStyles = {
