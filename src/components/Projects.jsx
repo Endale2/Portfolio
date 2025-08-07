@@ -1,77 +1,86 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import {
     FaGithub,
-    FaTimes,
     FaPython,
     FaMobileAlt,
     FaGlobe,
-    FaExternalLinkAlt,
     FaRocket,
     FaDownload,
 } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
+// Font stack for code/dev look
+const codeFont = 'font-["JetBrains Mono","Fira Code","Menlo","monospace"]';
+
+// ============================================================================
+// 1. DATA SOURCE
+// Centralized project data. Easy to add, remove, or update projects.
+// ============================================================================
 const projects = [
     {
-        "title": "[In Progress] Custom Shop Builder Platform",
-        "category": "Full-Stack Web (Go, Vue.js)",
-        "description": "A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang.",
-        "coverImage": "/images/drps.png",
-        "platform": "web",
-        "website": null,
-        "github": null,
-        "status": "in-progress"
+        title: '[In Progress] Custom Shop Builder Platform',
+        category: 'Full-Stack Web (Go, Vue.js)',
+        description:
+            'A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang.',
+        coverImage: '/images/drps.png',
+        platform: 'web',
+        status: 'in-progress',
     },
     {
-        "title": "Ethiopian Recipe Sharing Platform",
-        "category": "Full-Stack Web (MERN)",
-        "description": "A feature-rich web platform for food enthusiasts. Users can discover, share, and save their favorite Ethiopian recipes, fostering a vibrant community around traditional dishes.",
-        "coverImage": "/images/mern-recipe.png",
-        "platform": "web",
-        "website": "https://mern-ethiopian-recipes.vercel.app",
-        "github": "https://github.com/Endale2/MERN-Ethiopian-Recipes",
-        "status": "completed"
+        title: 'Ethiopian Recipe Sharing Platform',
+        category: 'Full-Stack Web (MERN)',
+        description:
+            'A feature-rich web platform for food enthusiasts. Users can discover, share, and save their favorite Ethiopian recipes, fostering a vibrant community around traditional dishes.',
+        coverImage: '/images/mern-recipe.png',
+        platform: 'web',
+        website: 'https://mern-ethiopian-recipes.vercel.app',
+        github: 'https://github.com/Endale2/MERN-Ethiopian-Recipes',
+        status: 'completed',
     },
     {
-        "title": "Social Networking App",
-        "category": "Mobile App (Flutter & BLoC)",
-        "description": "A mobile social networking application developed using Flutter and BLoC for state management. It leverages Firebase for authentication and real-time database operations.",
-        "coverImage": "/images/socialX.png",
-        "platform": "mobile",
-        "github": "https://github.com/Endale2/Social-Media-App-flutter-bloc-firebase-",
-        "downloadUrl": "https://t.me/codejkr/64",
-        "status": "completed"
+        title: 'Social Networking App',
+        category: 'Mobile App (Flutter & BLoC)',
+        description:
+            'A mobile social networking application developed using Flutter and BLoC for state management. It leverages Firebase for authentication and real-time database operations.',
+        coverImage: '/images/socialX.png',
+        platform: 'mobile',
+        github: 'https://github.com/Endale2/Social-Media-App-flutter-bloc-firebase-',
+        downloadUrl: 'https://t.me/codejkr/64',
+        status: 'completed',
     },
     {
-        "title": "Telegather CLI Tool",
-        "category": "CLI Tool (Python)",
-        "description": "A versatile Command Line Interface (CLI) tool designed to efficiently scrape messages from public Telegram channels and export them to a CSV file for analysis.",
-        "coverImage": "/images/telegather.png",
-        "platform": "cli",
-        "github": "https://github.com/Endale2/telegather",
-        "pypi": "https://pypi.org/project/telegather/",
-        "status": "completed"
+        title: 'Telegather CLI Tool',
+        category: 'CLI Tool (Python)',
+        description:
+            'A versatile Command Line Interface (CLI) tool designed to efficiently scrape messages from public Telegram channels and export them to a CSV file for analysis.',
+        coverImage: '/images/telegather.png',
+        platform: 'cli',
+        github: 'https://github.com/Endale2/telegather',
+        pypi: 'https://pypi.org/project/telegather/',
+        status: 'completed',
     },
     {
-        "title": "Instagram Homepage Clone",
-        "category": "Front-End Web (Nuxt3)",
-        "description": "A fully responsive clone of Instagram’s homepage built with Nuxt3, optimized for both mobile and desktop experiences.",
-        "coverImage": "/images/insta.png",
-        "platform": "web",
-        "website": "https://instagram-clone-by-nuxt3.vercel.app",
-        "github": "hhttps://github.com/Endale2/instagram-clone_by_Nuxt3",
-        "status": "completed"
-      }
-      
+        title: 'Instagram Homepage Clone',
+        category: 'Front-End Web (Nuxt3)',
+        description:
+            'A fully responsive clone of Instagram’s homepage built with Nuxt3, optimized for both mobile and desktop experiences.',
+        coverImage: '/images/insta.png',
+        platform: 'web',
+        website: 'https://instagram-clone-by-nuxt3.vercel.app',
+        github: 'https://github.com/Endale2/instagram-clone_by_Nuxt3',
+        status: 'completed',
+    },
 ];
 
-// Icon mapping for project links and platforms
+// ============================================================================
+// 2. CONFIGURATION
+// Icons and style mappings are kept here for easy customization.
+// ============================================================================
 const linkIcons = {
     github: <FaGithub />,
     website: <FaRocket />,
     downloadUrl: <FaDownload />,
     pypi: <FaPython />,
-    docs: <FaExternalLinkAlt />
 };
 
 const platformIcons = {
@@ -80,199 +89,128 @@ const platformIcons = {
     cli: <FaPython />,
 };
 
-const Projects = () => {
-    const [selected, setSelected] = useState(null);
+const statusStyles = {
+    completed: {
+        border: 'border-green-500 shadow-green-400/30',
+        badge: 'bg-green-500/90 text-white',
+    },
+    'in-progress': {
+        border: 'border-yellow-400 shadow-yellow-300/30',
+        badge: 'bg-yellow-500/90 text-slate-900',
+    },
+};
 
-    const openModal = useCallback((proj) => {
-        setSelected(proj);
-        document.body.style.overflow = 'hidden';
-    }, []);
+const timelineVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i) => ({
+        opacity: 1,
+        y: 0,
+        transition: { delay: i * 0.12, type: 'spring', stiffness: 100, damping: 15 },
+    }),
+};
 
-    const closeModal = useCallback(() => {
-        setSelected(null);
-        document.body.style.overflow = '';
-    }, []);
+// ============================================================================
+// 3. CHILD COMPONENT: ProjectCard
+// This component is responsible for rendering a single project.
+// ============================================================================
+function ProjectCard({ project, index, isLeft }) {
+    const { title, category, description, coverImage, platform, status } = project;
+    const currentStatusStyles = statusStyles[status];
 
-    useEffect(() => {
-        const handleKey = (e) => e.key === 'Escape' && closeModal();
-        document.addEventListener('keydown', handleKey);
-        return () => document.removeEventListener('keydown', handleKey);
-    }, [closeModal]);
-
-    // Animation variants
-    const cardVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } },
-    };
-
-    const modalVariants = {
-        hidden: { opacity: 0, scale: 0.95 },
-        visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 150, damping: 20 } },
-        exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } }
-    };
-
-    // Renders the links for each project card/modal
-    const renderLinks = (proj) => {
+    const renderLinks = () => {
         const keys = ['github', 'website', 'downloadUrl', 'pypi'];
-        return keys.map(key => {
-            if (!proj[key]) return null;
-            const Icon = linkIcons[key] || <FaExternalLinkAlt />;
-            return (
+        return keys
+            .filter((key) => project[key])
+            .map((key) => (
                 <a
                     key={key}
-                    href={proj[key]}
+                    href={project[key]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-cyan-300 bg-slate-700/50 hover:bg-slate-700 transition-all duration-300 rounded-lg px-4 py-2 shadow-md text-sm font-medium hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                    aria-label={`Open ${key.replace('Url', '')} for ${proj.title}`}
+                    className={`flex items-center gap-2 text-cyan-300 bg-slate-800/80 hover:bg-cyan-700/90 transition-all duration-300 rounded-lg px-3 py-1.5 shadow-md text-xs font-medium hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 ${codeFont}`}
+                    aria-label={`Open ${key.replace('Url', '')} for ${title}`}
                 >
-                    {Icon}
+                    {linkIcons[key]}
                     <span className="capitalize">{key.replace('Url', '')}</span>
                 </a>
-            );
-        });
+            ));
     };
 
     return (
-        <section id="projects" className="relative section-padding bg-slate-900 text-white overflow-hidden">
-            <div className="relative z-10 container-responsive">
+        <motion.div
+            className={`relative flex flex-col md:flex-row items-center md:items-stretch ${isLeft ? 'md:flex-row-reverse' : ''} bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-950/90 rounded-2xl shadow-xl border border-slate-700/80 p-4 md:p-6 gap-4 md:gap-8 transition-all duration-300`}
+            custom={index}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={timelineVariants}
+        >
+            {/* Image Section */}
+            <div className="md:w-1/2 w-full flex justify-center items-center px-2 md:px-4 mt-3 md:mt-0 relative group">
+                <img
+                    src={coverImage}
+                    alt={`${title} preview`}
+                    className={`w-full max-w-xs h-36 md:h-44 object-cover rounded-xl border-4 ${currentStatusStyles.border} shadow-lg group-hover:scale-105 transition-transform duration-500 cursor-pointer`}
+                />
+                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/60 to-transparent rounded-b-xl p-3 flex flex-col gap-1">
+                    <h3 className={`text-lg font-bold text-white drop-shadow-md truncate ${codeFont}`}>{title}</h3>
+                    <span className={`text-cyan-300 text-xs ${codeFont}`}>{category}</span>
+                </div>
+            </div>
+
+            {/* Content Section */}
+            <div className={`md:w-1/2 w-full px-2 md:px-4 py-3 md:py-0 flex flex-col justify-center ${isLeft ? 'md:pr-8' : 'md:pl-8'} gap-2`}> 
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="bg-slate-800/90 p-2 rounded-lg border border-slate-700 text-cyan-400">
+                        {platformIcons[platform]}
+                    </span>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${currentStatusStyles.badge} ${codeFont}`}>
+                        {status === 'completed' ? 'Completed' : 'In Progress'}
+                    </span>
+                </div>
+                <p className={`text-slate-200 text-xs md:text-sm leading-relaxed mb-2 ${codeFont}`}>{description}</p>
+                <div className="flex flex-wrap gap-2 mt-auto pt-2">{renderLinks()}</div>
+            </div>
+        </motion.div>
+    );
+}
+
+// ============================================================================
+// 4. MAIN COMPONENT: Projects
+// The primary component that assembles the section.
+// ============================================================================
+function Projects() {
+    return (
+        <section id="projects" className={`relative py-16 min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] text-white overflow-hidden ${codeFont}`}>
+            <div className="relative z-10 max-w-5xl mx-auto px-2 md:px-6">
                 {/* Section Header */}
-                <div className="flex items-center mb-16">
-                    <span className="text-cyan-400 font-code text-2xl mr-4">02.</span>
-                    <h2 className="text-3xl md:text-4xl font-bold gradient-text">
+                <div className="flex items-center mb-14 md:mb-20">
+                    <span className={`text-cyan-400 ${codeFont} text-2xl md:text-3xl mr-4`}>02.</span>
+                    <h2 className={`text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight ${codeFont}`}>
                         My Projects
                     </h2>
                     <div className="flex-grow h-px bg-slate-700 ml-6" />
                 </div>
 
-                {/* Projects Grid - Responsive with optimal breakpoints */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-                    {projects.map((proj, i) => (
-                        <motion.article
-                            key={i}
-                            className="bg-slate-800/50 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 border border-slate-700 cursor-pointer flex flex-col group card-hover"
-                            variants={cardVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ delay: i * 0.1 }}
-                            onClick={() => openModal(proj)}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => e.key === 'Enter' && openModal(proj)}
-                            aria-label={`View details for ${proj.title}`}
-                        >
-                            {/* Image Container */}
-                            <div className="relative overflow-hidden">
-                                <img 
-                                    src={proj.coverImage} 
-                                    alt={`${proj.title} preview`}
-                                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                                    loading="lazy"
-                                />
-                                {/* Platform Badge */}
-                                <div className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-sm text-cyan-400 p-2 rounded-lg border border-slate-700">
-                                    {platformIcons[proj.platform]}
+                {/* Timeline Layout */}
+                <div className="relative">
+                    {/* Vertical line for desktop */}
+                    <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-cyan-400/60 via-cyan-700/30 to-transparent -translate-x-1/2" />
+                    <div className="flex flex-col gap-14 md:gap-20">
+                        {projects.map((proj, i) => (
+                            <div key={i} className="relative flex justify-center">
+                                {/* Timeline Dot for desktop */}
+                                <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 w-full items-center justify-center z-10">
+                                    <div className="w-5 h-5 rounded-full bg-cyan-400 border-4 border-slate-900 shadow-lg" />
                                 </div>
-                                {/* Status Badge */}
-                                <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold ${
-                                    proj.status === 'completed' 
-                                        ? 'bg-green-500/80 text-white' 
-                                        : 'bg-yellow-500/80 text-slate-900'
-                                }`}>
-                                    {proj.status === 'completed' ? 'Completed' : 'In Progress'}
-                                </div>
+                                <ProjectCard project={proj} index={i} isLeft={i % 2 !== 0} />
                             </div>
-
-                            {/* Content */}
-                            <div className="p-6 flex-grow flex flex-col">
-                                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
-                                    {proj.title}
-                                </h3>
-                                <p className="text-cyan-400 text-sm font-code mb-3">
-                                    {proj.category}
-                                </p>
-                                <p className="text-slate-300 text-sm leading-relaxed mb-4 flex-grow">
-                                    {proj.description}
-                                </p>
-                                
-                                {/* Links */}
-                                <div className="flex flex-wrap gap-2 mt-auto">
-                                    {renderLinks(proj)}
-                                </div>
-                            </div>
-                        </motion.article>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
-
-            {/* Modal */}
-            <AnimatePresence>
-                {selected && (
-                    <motion.div
-                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={closeModal}
-                    >
-                        <motion.div
-                            className="bg-slate-800/95 backdrop-blur-md rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-700"
-                            variants={modalVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            {/* Modal Header */}
-                            <div className="relative p-6 border-b border-slate-700">
-                                <button
-                                    onClick={closeModal}
-                                    className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors duration-200"
-                                    aria-label="Close modal"
-                                >
-                                    <FaTimes size={24} />
-                                </button>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="bg-slate-700/50 p-3 rounded-lg">
-                                        {platformIcons[selected.platform]}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-white">{selected.title}</h3>
-                                        <p className="text-cyan-400 font-code">{selected.category}</p>
-                                    </div>
-                                </div>
-                                <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                                    selected.status === 'completed' 
-                                        ? 'bg-green-500/80 text-white' 
-                                        : 'bg-yellow-500/80 text-slate-900'
-                                }`}>
-                                    {selected.status === 'completed' ? 'Completed' : 'In Progress'}
-                                </div>
-                            </div>
-
-                            {/* Modal Content */}
-                            <div className="p-6">
-                                <img 
-                                    src={selected.coverImage} 
-                                    alt={`${selected.title} preview`}
-                                    className="w-full h-64 object-cover rounded-lg mb-6"
-                                />
-                                <p className="text-slate-300 leading-relaxed mb-6">
-                                    {selected.description}
-                                </p>
-                                
-                                {/* Modal Links */}
-                                <div className="flex flex-wrap gap-3">
-                                    {renderLinks(selected)}
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </section>
     );
-};
+}
 
 export default Projects;
