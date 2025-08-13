@@ -35,7 +35,7 @@ const projects = [
             'A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang.',
         coverImage: '/images/drps.png',
         platform: 'web',
-        status: 'in-progress',
+        status: 'completed',
     },
     {
         title: 'Ethiopian Recipe Sharing Platform',
