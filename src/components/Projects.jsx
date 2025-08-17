@@ -29,13 +29,14 @@ const projects = [
         status: 'completed',
     },
     {
-        title: 'Custom Shop Builder Platform',
+        title: 'Shop24 -  Custom Shop Builder Platform',
         category: 'Full-Stack Web (Go, Vue.js)',
         description:
             'A web-based platform that lets users create and manage their own custom online shops through an intuitive dashboard. The frontend is built with Vue.js and the backend with Golang.',
         coverImage: '/images/drps.png',
         platform: 'web',
-        status: 'completed',
+        status: 'in-progress',
+        website :"http://shop24.sbs"
     },
     {
         title: 'Ethiopian Recipe Sharing Platform',
