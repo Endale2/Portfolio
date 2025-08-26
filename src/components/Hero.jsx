@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-scroll';
-import { FiArrowDown, FiDownloadCloud } from 'react-icons/fi';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useMemo } from "react";
+import { Link } from "react-scroll";
+import { FiArrowDown, FiDownloadCloud } from "react-icons/fi";
+import { motion, useReducedMotion } from "framer-motion";
 
-const codeFont = 'font-["JetBrains Mono","Fira Code","Monaco","Cascadia Code","Roboto Mono",Consolas,"Courier New",monospace]';
-const sansFont = 'font-sans';
+const codeFont =
+  'font-["JetBrains Mono","Fira Code","Monaco","Cascadia Code","Roboto Mono",Consolas,"Courier New",monospace]';
+const sansFont = "font-sans";
 
 const Particle = ({ x, y, size, delay, duration }) => (
   <motion.div
@@ -14,18 +15,18 @@ const Particle = ({ x, y, size, delay, duration }) => (
       x,
       y,
       scale: Math.random() * 2 + 0.5,
-      opacity: [0, 0.4, 0]
+      opacity: [0, 0.4, 0],
     }}
     transition={{
       duration,
       repeat: Infinity,
-      ease: 'linear',
-      delay
+      ease: "linear",
+      delay,
     }}
     style={{
       width: `${size}px`,
       height: `${size}px`,
-      filter: 'blur(0.5px)'
+      filter: "blur(0.5px)",
     }}
   />
 );
@@ -33,7 +34,6 @@ const Particle = ({ x, y, size, delay, duration }) => (
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
 
-  // Pre-generate particle positions only once
   const particles = useMemo(() => {
     if (shouldReduceMotion) return [];
     return Array.from({ length: 16 }).map(() => ({
@@ -41,32 +41,32 @@ const Hero = () => {
       y: Math.random() * 500 - 250,
       size: Math.random() * 4 + 1,
       delay: Math.random() * 5,
-      duration: Math.random() * 5 + 3
+      duration: Math.random() * 5 + 3,
     }));
   }, [shouldReduceMotion]);
-
-  const introText = 'Full-Stack Engineer | Mobile Developer | ML Enthusiast';
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
-      opacity: 1, y: 0,
-      transition: { staggerChildren: 0.2, delayChildren: 0.3 }
-    }
+      opacity: 1,
+      y: 0,
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
-      opacity: 1, y: 0,
-      transition: { type: 'spring', stiffness: 120, damping: 12 }
-    }
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 120, damping: 12 },
+    },
   };
 
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] overflow-hidden pt-28 md:pt-36"
+      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0a192f] overflow-hidden pt-24 md:pt-32"
     >
       {/* Background overlay accents */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -82,7 +82,7 @@ const Hero = () => {
       </div>
 
       <motion.div
-        className="relative z-10 w-full flex flex-col items-center justify-center px-4 md:px-8"
+        className="relative z-10 w-full flex flex-col items-center justify-center px-4 md:px-6"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -90,46 +90,40 @@ const Hero = () => {
         {/* Name Heading */}
         <motion.h1
           variants={itemVariants}
-          className={`relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight drop-shadow-lg ${codeFont} flex items-center justify-center gap-2 mb-4 md:mb-6`}
+          className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg ${sansFont} text-center mb-3 md:mb-4`}
         >
-          <span className="text-cyan-400">&#123;</span>
-          Endale Shimelis
-          <span className="text-cyan-400">&#125;</span>
-          <span
-            className="absolute left-1/2 -bottom-2 md:-bottom-3 w-2/3 md:w-1/2 h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 rounded-full blur-[2px] -translate-x-1/2 animate-pulse"
-            aria-hidden="true"
-          />
+          Hi, I’m <span className="text-cyan-400">Endale Shimelis</span>
         </motion.h1>
 
         {/* Tagline */}
         <motion.p
           variants={itemVariants}
-          className={`text-cyan-300 text-lg sm:text-xl md:text-2xl font-semibold tracking-wide ${codeFont} mb-4 md:mb-6`}
+          className={`text-cyan-300 text-base sm:text-lg md:text-xl font-medium tracking-wide ${sansFont} text-center mb-3 md:mb-4`}
         >
-          {introText}
+          Full-Stack Engineer · Mobile Developer · ML Enthusiast
         </motion.p>
 
         {/* Intro paragraph */}
         <motion.p
           variants={itemVariants}
-          className={`text-slate-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto ${sansFont} mb-8 md:mb-12`}
+          className={`text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto ${sansFont} text-center mb-6 md:mb-8`}
         >
-          I specialize in building scalable web applications, crafting seamless mobile experiences,
-          and integrating machine learning workflows to solve real-world challenges. Let's turn your
-          vision into production-ready solutions.
+          I love building clean, modern apps that feel natural to use. From web
+          platforms to mobile experiences, and even AI-powered workflows — I
+          enjoy turning ideas into real products that people love.
         </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-lg"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 w-full max-w-md"
         >
           <Link
             to="projects"
             smooth
             duration={600}
             offset={-80}
-            className={`btn-outline flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold group w-full sm:w-auto justify-center ${codeFont} hover:shadow-cyan-400/30 focus-visible:ring-2 focus-visible:ring-cyan-400/60`}
+            className={`btn-outline flex items-center gap-2 md:gap-2.5 px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base font-semibold group w-full sm:w-auto justify-center ${codeFont} hover:shadow-cyan-400/30 focus-visible:ring-2 focus-visible:ring-cyan-400/60`}
             aria-label="View my projects"
           >
             View Projects
@@ -138,7 +132,7 @@ const Hero = () => {
           <a
             href="/endale.pdf"
             download
-            className={`btn-primary flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold w-full sm:w-auto justify-center ${codeFont} hover:shadow-cyan-400/30 focus-visible:ring-2 focus-visible:ring-cyan-400/60`}
+            className={`btn-primary flex items-center gap-2 md:gap-2.5 px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base font-semibold w-full sm:w-auto justify-center ${codeFont} hover:shadow-cyan-400/30 focus-visible:ring-2 focus-visible:ring-cyan-400/60`}
             aria-label="Download my CV"
           >
             Download CV
